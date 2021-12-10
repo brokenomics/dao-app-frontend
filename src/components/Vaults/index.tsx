@@ -108,7 +108,7 @@ export default class Vault {
       const tokens = window.web3.utils.toWei(amount.toString(), 'ether');
       const bnValue = window.web3.utils.toBN(tokens);
       const estimate = await this.rpVaultInstance.methods
-        .stake(amount)
+        .stake(bnValue)
         .estimateGas({ from: who });
 
       const tx = await this.rpVaultInstance.methods
@@ -181,5 +181,13 @@ or 6341958000 * 10^-18
     } catch (error) {
       return false;
     }
+  }
+
+  async getRewards(who: string) {
+    const rewards = await this.rpVaultInstance.methods.rewards(who).call();
+
+    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
+
+    return formattedBal;
   }
 }

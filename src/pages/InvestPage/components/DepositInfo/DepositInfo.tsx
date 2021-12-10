@@ -49,9 +49,11 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   async function getSlpTokenBalance() {
     const balance = address && (await slpVaultClient.getTokenBalance(address));
 
-    if (!balance) return;
-
-    setSlpTokenBalance(balance.toFixed(2));
+    if (!balance) {
+      setSlpTokenBalance('0.00');
+    } else {
+      setSlpTokenBalance(balance.toFixed(2));
+    }
   }
 
   async function getSlpApy() {
@@ -282,10 +284,16 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
         <div className={s.tile}>
           <div className={s.tilePart}>
             <div className={s.currency}>NEWO SINGLE-SIDE</div>
-            <div className={s.strategy}>APY</div>
+            <div className={s.strategy}>APR</div>
             <div className={s.percentValue}>
-              <span>{apy}</span>
-              <span className={s.percent}>%</span>
+              {apy === 0 ? (
+                <span>NaN</span>
+              ) : (
+                <>
+                  <span>{apy}</span>
+                  <span className={s.percent}>%</span>
+                </>
+              )}
             </div>
           </div>
           <div className={s.tilePart}>
@@ -307,12 +315,16 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
 
             <div className={s.balances}>
               <div className={s.balance}>
-                <span>Total Vault Balance:</span>
-                <span className={s.balanceValue}> {vaultBalance}</span>
+                <span>Your balance: </span>
+                <span className={s.balanceValue}> {tokenAmount}</span>
               </div>
               <div className={s.balance}>
                 <span>Your deposit:</span>
                 <span className={s.balanceValue}> {userVaultBalance}</span>
+              </div>
+              <div className={s.balance}>
+                <span>Total Vault Balance:</span>
+                <span className={s.balanceValue}> {vaultBalance}</span>
               </div>
             </div>
 
@@ -353,10 +365,16 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
         <div className={s.tile}>
           <div className={s.tilePart}>
             <div className={s.currency}>SUSHI LP - NEWO/USDC</div>
-            <div className={s.strategy}>APY</div>
+            <div className={s.strategy}>APR</div>
             <div className={s.percentValue}>
-              <span>{slpVaultApy}</span>
-              <span className={s.percent}>%</span>
+              {slpVaultApy ? (
+                <span>NaN</span>
+              ) : (
+                <>
+                  <span>{slpVaultApy}</span>
+                  <span className={s.percent}>%</span>
+                </>
+              )}
             </div>
           </div>
           <div className={s.tilePart}>
@@ -378,12 +396,16 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
 
             <div className={s.balances}>
               <div className={s.balance}>
-                <span>Total Vault Balance:</span>
-                <span className={s.balanceValue}> {slpVaultBalance}</span>
+                <span>Your balance: </span>
+                <span className={s.balanceValue}> {slpTokenBalance}</span>
               </div>
               <div className={s.balance}>
                 <span>Your deposit:</span>
                 <span className={s.balanceValue}> {userSlpVaultBalance}</span>
+              </div>
+              <div className={s.balance}>
+                <span>Total Vault Balance:</span>
+                <span className={s.balanceValue}> {slpVaultBalance}</span>
               </div>
             </div>
 

@@ -41,11 +41,13 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
   const [updateFlag, setUpdateFlag] = useState(0);
   const { address, updateTokenBalance } = React.useContext(Web3Context) || {};
   const [apy, setAPY] = React.useState(0);
+  const [newoRewards, setNewoRewards] = React.useState(0);
 
   // SLP
   const [slpEntry, setSlpEntry] = React.useState(0);
   const [slpBal, setSlpBal] = React.useState(0);
   const [slpApy, setSlpApy] = React.useState(0);
+  const [slpRewards, setSlpRewards] = React.useState(0);
 
   function getPositiveNegativeClassName(value: number) {
     const isRatePositive = value >= 0;
@@ -54,6 +56,12 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
       [s.positive]: isRatePositive,
       [s.negative]: !isRatePositive,
     });
+  }
+
+  async function getSlpRewards(who: string) {
+    const rewards = await slpVaultClient.getRewards(who);
+
+    setSlpRewards(rewards);
   }
 
   async function getUserSlpBalance(who: string) {
@@ -73,6 +81,12 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     const rate = await slpVaultClient.getStrategyAPY();
 
     setSlpApy(rate);
+  }
+
+  async function getNewoRewards(who: string) {
+    const rewards = await vaultClient.getRewards(who);
+
+    setNewoRewards(rewards);
   }
 
   async function getUserBalance(who: string) {
@@ -100,6 +114,8 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
       getAPY();
       getUserSlpBalance(address);
       getSlpApy();
+      getSlpRewards(address);
+      getNewoRewards(address);
     }
   }, [address, updateFlag]);
 
@@ -204,6 +220,25 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
         },
       },
       {
+        Header: (
+          <div>
+            <div>Rewards</div>
+            {/* <div className={s.balanceChange}>Recent balance change</div> */}
+          </div>
+        ),
+        accessor: 'rewards',
+        cellClassName: s.narrowColumns,
+        Cell: ({ cell }: CellProps<{ value: number }>) => {
+          const { value } = cell;
+
+          return (
+            <div className={s.balanceInfo}>
+              <div className={s.balance}>{value}</div>
+            </div>
+          );
+        },
+      },
+      {
         Header: 'Strategy APY',
         cellClassName: s.narrowColumns,
         accessor: 'strategyAPY',
@@ -256,6 +291,7 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
         balance: {
           balance: bal,
         },
+        rewards: newoRewards,
         strategyAPY: apy,
         strategyWithdraw: 'newo',
       })),
@@ -265,11 +301,12 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
         balance: {
           balance: slpBal,
         },
+        rewards: slpRewards,
         strategyAPY: slpApy,
         strategyWithdraw: 'slp',
       })),
     ],
-    [entry, bal, apy, slpEntry, slpBal, slpApy],
+    [entry, bal, apy, slpEntry, slpBal, slpApy, slpRewards, newoRewards],
   );
 
   // function handleRowClick(row: Row) {

@@ -91,7 +91,7 @@ export default class SLPVault {
       const tokens = window.web3.utils.toWei(amount.toString(), 'ether');
       const bnValue = window.web3.utils.toBN(tokens);
       const estimate = await this.slpVaultInstance.methods
-        .stake(amount)
+        .stake(bnValue)
         .estimateGas({ from: who });
 
       const tx = await this.slpVaultInstance.methods
@@ -149,5 +149,13 @@ export default class SLPVault {
     } catch (error) {
       return false;
     }
+  }
+
+  async getRewards(who: string) {
+    const rewards = await this.slpVaultInstance.methods.rewards(who).call();
+
+    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
+
+    return formattedBal;
   }
 }

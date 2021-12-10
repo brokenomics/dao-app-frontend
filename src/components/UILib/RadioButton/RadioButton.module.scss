@@ -1,0 +1,132 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+@mixin checked($opacity) {
+  background: linear-gradient(110.42deg,
+  rgba(colors.$purple-60, $opacity) 0%,
+  rgba(colors.$red-60, $opacity) 100%);
+}
+
+.root {
+  --checkMarkBorder: #{colors.$grey-100};
+  align-content: center;
+  align-items: center;
+  border-radius: 50%;
+  display: inline-flex;
+  height: functions.rem(18);
+  justify-content: center;
+  outline: none;
+  position: relative;
+  width: functions.rem(18);
+
+  &.checked {
+    background: linear-gradient(110.42deg,
+    colors.$purple-60 0%,
+    colors.$red-60 100%);
+  }
+
+  &.disabled {
+    background: var(--checkMarkBorder);
+  }
+
+  &:hover .circle {
+    background: rgba(colors.$grey-65, 0.1);
+    display: block;
+    opacity: 1;
+  }
+
+  &:focus .circle {
+    background: rgba(colors.$grey-65, 0.2);
+    opacity: 1;
+  }
+
+  &:active .circle {
+    background: rgba(colors.$grey-65, 0.4);
+    opacity: 1;
+  }
+}
+
+.disabled {
+  background: var(--checkMarkBorder);
+
+  &:hover .circle {
+    display: none;
+  }
+}
+
+.checked {
+  &.disabled {
+    background: colors.$grey-75;
+    color: colors.$grey-65;
+  }
+
+  &.disabled .circle {
+    display: none;
+  }
+
+  &:hover .circle {
+    @include checked(0.15);
+    opacity: 1;
+  }
+
+  &:focus .circle {
+    @include checked(0.25);
+    opacity: 1;
+  }
+
+  &:active .circle {
+    @include checked(0.4);
+    opacity: 1;
+  }
+}
+
+.checkMark {
+  background: linear-gradient(110.42deg,
+  colors.$purple-60 0%,
+  colors.$red-60 100%);
+  border: functions.rem(3) solid var(--checkMarkBorder);
+  border-radius: 50%;
+  box-sizing: content-box;
+  cursor: pointer;
+  height: functions.rem(8);
+  position: absolute;
+  width: functions.rem(8);
+}
+
+.styledRadio {
+  appearance: none;
+  border: functions.rem(2) solid colors.$grey-65;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: functions.rem(18);
+  outline: none;
+  width: functions.rem(18);
+
+  &.checked {
+    border: none;
+  }
+
+  &.disabled {
+    border-color: colors.$grey-75;
+    cursor: default;
+  }
+
+  &.disabled + .checkMark {
+    background: colors.$grey-75;
+    cursor: default;
+  }
+
+  &.disabled .circle {
+    display: none;
+  }
+}
+
+.circle {
+  border-radius: functions.rem(40);
+  height: functions.rem(40);
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.2s;
+  width: functions.rem(40);
+}

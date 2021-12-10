@@ -1,0 +1,7 @@
+export const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+export const MERKLE_SMART_CONTRACT_ADDRESS =
+  process.env.REACT_APP_MERKLE_SMART_CONTRACT_ADDRESS;
+export const MERKLE_TREE = process.env.REACT_APP_MERKLE_TREE;
+export const MAIN_TOKEN_ADDRESS = process.env.REACT_APP_TOKEN_ADDRESS;
+export const VAULT_TOKEN_ADDRESS = process.env.REACT_APP_BAL_ODEFI_USDC;
+export const SNAPSHOT_SPACE = process.env.REACT_APP_SNAPSHOT_SPACE;

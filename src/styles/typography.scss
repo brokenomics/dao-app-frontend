@@ -1,0 +1,240 @@
+@use 'variables';
+@use 'functions';
+
+%paragraph-1 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(32);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(48);
+}
+
+%paragraph-2 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(24);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(36);
+}
+
+%paragraph-3 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(18);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(28);
+}
+
+%body-1 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(16);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(24);
+}
+
+%body-2 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(24);
+}
+
+%caption-1 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(12);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(18);
+}
+
+%caption-2 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(10);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(16);
+}
+
+%caption-3 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(8);
+  font-style: normal;
+  font-weight: 400;
+  line-height: functions.rem(12);
+}
+
+%tagline-1 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(24);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(36);
+  text-transform: uppercase;
+}
+
+%tagline-2 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(18);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(28);
+  text-transform: uppercase;
+}
+
+%tagline-3 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(16);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(24);
+  text-transform: uppercase;
+}
+
+%tagline-4 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(14);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(16);
+  text-transform: uppercase;
+}
+
+%tagline-5 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(12);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(18);
+  text-transform: uppercase;
+}
+
+%tagline-6 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(10);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(16);
+  text-transform: uppercase;
+}
+
+%title-1 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(32);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(48);
+}
+
+%title-2 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(24);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(36);
+}
+
+%title-3 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(18);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(28);
+}
+
+%title-4 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(16);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(24);
+}
+
+%title-5 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(14);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(24);
+}
+
+%title-6 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(12);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(18);
+}
+
+%title-7 {
+  font-family: variables.$main-font;
+  font-size: functions.rem(10);
+  font-style: normal;
+  font-weight: 600;
+  line-height: functions.rem(16);
+}
+
+%heading-1 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(76);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(104);
+}
+
+%heading-2 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(60);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(72);
+}
+
+%heading-3 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(42);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(56);
+}
+
+%heading-4 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(32);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(48);
+}
+
+%heading-5 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(24);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(36);
+}
+
+%heading-6 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(18);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(28);
+}
+
+%heading-7 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(16);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(24);
+}
+
+%heading-8 {
+  font-family: variables.$title-font;
+  font-size: functions.rem(14);
+  font-style: normal;
+  font-weight: 800;
+  line-height: functions.rem(24);
+}

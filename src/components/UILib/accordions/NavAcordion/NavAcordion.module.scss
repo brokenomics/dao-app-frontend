@@ -1,0 +1,16 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.accordion {
+  color: colors.$grey-65;
+}
+
+.header {
+  height: functions.rem(38);
+  padding: 0 functions.rem(20) 0 functions.rem(24);
+  user-select: none;
+}
+
+.arrow {
+  color: colors.$grey-65;
+}

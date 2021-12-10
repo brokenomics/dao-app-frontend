@@ -1,0 +1,26 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  --vertical-padding: #{functions.rem(32)};
+  --tabs-height: #{functions.rem(44)};
+  column-gap: functions.rem(20);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  height: 100%;
+  padding: var(--vertical-padding) 0;
+}
+
+.tile {
+  height: calc(100vh - var(--header-height) - var(--tabs-padding) - var(--tabs-height) -
+  var(--vertical-padding) - var(--vertical-padding));
+}
+
+.websites {
+  @extend .tile;
+}
+
+.twitter {
+  @extend .tile;
+}

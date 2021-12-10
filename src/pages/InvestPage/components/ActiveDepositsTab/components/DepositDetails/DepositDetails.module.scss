@@ -1,0 +1,126 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.header {
+  @extend %title-2;
+  display: flex;
+  justify-content: space-between;
+  margin: functions.rem(30) 0;
+
+  .leftPart {
+    align-items: center;
+    color: colors.$grey-65;
+    display: flex;
+  }
+
+  .ether {
+    color: colors.$white;
+    margin: 0 functions.rem(8);
+  }
+}
+
+.tiles {
+  display: flex;
+  margin-bottom: functions.rem(38);
+
+  .tile {
+    min-height: functions.rem(150);
+    min-width: functions.rem(274);
+  }
+
+  .tile:not(:last-of-type) {
+    margin-right: functions.rem(54);
+  }
+
+  .title {
+    margin-right: functions.rem(8);
+  }
+
+  .rank {
+    color: colors.$success-40;
+  }
+}
+
+.balance {
+  @extend %heading-5;
+
+  &.green {
+    color: colors.$success-40;
+  }
+}
+
+.balanceDiff {
+  @extend %title-6;
+  color: colors.$success-40;
+}
+
+.transactions {
+  @extend %title-3;
+  margin-bottom: functions.rem(30);
+}
+
+.table {
+  margin-top: functions.rem(20);
+}
+
+.actionCell {
+  max-width: functions.rem(100) !important;
+}
+
+.dateTime {
+  @extend %title-6;
+  color: colors.$white;
+
+  .time {
+    color: colors.$grey-65;
+  }
+}
+
+.tokenAmount {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  .tokenVal {
+    @extend %caption-2;
+  }
+}
+
+
+.amount {
+  @extend %title-5;
+  align-items: flex-end;
+  color: colors.$success-40;
+
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  &.negative {
+    color: colors.$error-40;
+  }
+}
+
+.usd {
+  @extend %caption-2;
+  color: colors.$grey-65;
+}
+
+.actionIcon {
+  cursor: pointer;
+}
+
+.filters {
+  align-items: center;
+  display: flex;
+}
+
+.tagFilter {
+  margin-right: functions.rem(8);
+
+  &:first-of-type {
+    margin-left: functions.rem(12);
+  }
+}

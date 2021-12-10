@@ -1,0 +1,13 @@
+@use 'styles/functions';
+
+.root {
+  position: relative;
+}
+
+.secondaryWallet {
+  left: 0;
+  margin-top: functions.rem(5);
+  position: absolute;
+  right: 0;
+  top: 100%;
+}

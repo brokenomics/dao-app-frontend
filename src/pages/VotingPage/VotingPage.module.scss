@@ -1,0 +1,136 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.content {
+  padding-left: functions.rem(40);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: functions.rem(32);
+
+  padding-right: functions.rem(48);
+}
+
+.search {
+  margin-bottom: functions.rem(24);
+  width: functions.rem(336);
+
+  .icon {
+    $icon-size: functions.rem(24);
+
+    color: colors.$grey-65;
+    height: $icon-size;
+    width: $icon-size;
+  }
+
+  .label {
+    left: functions.rem(22);
+  }
+
+  .focused .label {
+    left: 0;
+  }
+
+  .iconContainer {
+    align-items: center;
+    display: flex;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: functions.rem(32);
+
+  .card {
+    margin: functions.rem(20) functions.rem(20) 0 0;
+  }
+}
+
+.openStakeButton {
+  // justify-self: center;
+  float: right;
+  margin-right: functions.rem(48);
+  margin-top: functions.rem(32);
+}
+
+.stakingContainer {
+  background-color: colors.$grey-95;
+  border-radius: functions.rem(8);
+  float: right;
+  margin: 10px;
+  margin-right: 10px;
+  padding: functions.rem(24);
+  width: 28%;
+}
+
+.stakingInput {
+  width: fit-content;
+}
+
+.stakingButton {
+  align-self: center;
+  width: 62.328;
+}
+
+.unstakingButton {
+  align-self: center;
+}
+
+.buttonIcon {
+  margin-right: 2px;
+}
+
+.labelContainer {
+  align-items: center;
+  display: flex;
+  float: right;
+  gap: functions.rem(10);
+  margin-right: functions.rem(40);
+  margin-top: functions.rem(32);
+
+  .votingPowerLabel {
+    margin: auto;
+    padding: functions.rem(10) functions.rem(20);
+    width: fit-content;
+  }
+}
+
+.stakeSwitch {
+  .switch {
+    margin: auto;
+  }
+}
+
+.stakingSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: auto;
+  margin-top: 20px;
+  width: 80%;
+
+  .stakeValue {
+    align-self: flex-start;
+    width: 100%;
+  }
+
+  .stakeButton {
+    align-self: center;
+  }
+
+  .votingPower {
+    align-self: center;
+  }
+
+  .unstakeButton {
+    align-self: center;
+  }
+
+  .closeStaking {
+    align-self: flex-end;
+  }
+}

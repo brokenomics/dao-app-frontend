@@ -1,0 +1,105 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  align-items: center;
+  background-color: colors.$grey-85;
+  border-radius: functions.rem(8);
+  display: flex;
+  height: functions.rem(104);
+  justify-content: space-between;
+  padding-right: functions.rem(32);
+  transition: all 0.3s;
+  width: functions.rem(576);
+
+  svg {
+    height: functions.rem(20);
+    margin-right: functions.rem(10);
+    width: functions.rem(20);
+  }
+
+  &.claimed {
+    width: functions.rem(624);
+  }
+}
+
+.balanceWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: functions.rem(32);
+}
+
+.tip {
+  @extend %caption-2;
+  color: colors.$grey-65;
+}
+
+.balance {
+  @extend %heading-5;
+  margin-top: functions.rem(2);
+}
+
+.claimBtn {
+  margin-left: auto;
+  width: functions.rem(141);
+
+  &.disabled {
+    background: linear-gradient(110.42deg,
+    colors.$brand-purple,
+    colors.$brand-red);
+    color: colors.$white;
+  }
+
+  &.claimed {
+    margin-left: 0;
+  }
+}
+
+.etherLink {
+  margin-left: auto;
+  margin-right: functions.rem(12);
+
+  &:hover,
+  &:active {
+    --background-color: #{colors.$grey-80};
+  }
+}
+
+.claimingIcon {
+  animation: rotation infinite 1s linear;
+  transform-origin: 50% 51%;
+}
+
+.claimedIcon {
+  animation: appear 0.5s ease-in 1;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.buttonsHolder {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@keyframes appear {
+  0% {
+    transform: scale(0);
+  }
+
+  85% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

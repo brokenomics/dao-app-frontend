@@ -1,0 +1,38 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.tab {
+  @extend %heading-6;
+  border-bottom: functions.rem(2) solid transparent;
+  bottom: functions.rem(-2);
+  color: colors.$grey-65;
+  cursor: pointer;
+  display: flex;
+  letter-spacing: 0.04em;
+  line-height: functions.rem(28);
+  margin: 0 functions.rem(12);
+  outline: none;
+  padding-bottom: functions.rem(12);
+  position: relative;
+
+  &.active {
+    border-color: colors.$brand-pink;
+    color: colors.$white;
+  }
+
+  &.disabled {
+    color: colors.$grey-75;
+    pointer-events: none;
+  }
+
+  &.small {
+    @extend %tagline-3;
+  }
+}
+
+.comingSoon {
+  @extend %caption-1;
+  color: colors.$white;
+  margin-left: functions.rem(4);
+}

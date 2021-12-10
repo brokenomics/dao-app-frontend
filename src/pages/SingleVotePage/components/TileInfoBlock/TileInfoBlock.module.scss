@@ -1,0 +1,14 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+
+.root {
+  @extend %body-1;
+}
+
+.title {
+  @extend %caption-2;
+  color: colors.$grey-65;
+  margin-bottom: functions.rem(8);
+}

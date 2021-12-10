@@ -1,0 +1,68 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+/* stylelint-disable property-no-unknown */
+/* stylelint-disable function-parentheses-space-inside */
+
+.root {
+  background-color: transparent;
+  border: 1px solid colors.$brand-green;
+  border-radius: functions.rem(100);
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  font-style: functions.rem(10);
+  font-weight: 700;
+  line-height: functions.rem(16);
+  overflow: hidden;
+  padding: functions.rem(4) functions.rem(8);
+  position: relative;
+  text-fill-color: transparent;
+  transition: 0.3s;
+  user-select: none;
+
+  &::before {
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    opacity: 0.1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: inherit;
+    z-index: 1;
+  }
+
+  &:hover::before {
+    opacity: 0.2;
+  }
+
+  &:active::before {
+    opacity: 0.4;
+  }
+}
+
+.disabled {
+  color: colors.$grey-75;
+  cursor: default;
+  pointer-events: none;
+
+  &::before {
+    opacity: 0;
+  }
+
+  .content {
+    background: none;
+    background-clip: initial;
+    text-fill-color: initial;
+  }
+}
+
+.content {
+  background-clip: text;
+  color: colors.$white;
+  position: relative;
+  text-fill-color: transparent;
+  z-index: 2;
+}

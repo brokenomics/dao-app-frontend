@@ -1,0 +1,31 @@
+.root {
+  display: block;
+  padding: 20px;
+  width: 100%;
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+.block {
+  margin: 20px 0;
+}
+
+.col {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+
+  + .col {
+    margin-left: 10px;
+  }
+}
+
+.button + .button {
+  margin-top: 10px;
+}
+
+.iconTable {
+  border: 1px solid;
+}

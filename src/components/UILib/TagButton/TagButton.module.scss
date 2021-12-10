@@ -1,0 +1,158 @@
+@use 'styles/functions';
+@use 'styles/colors';
+@import 'styles/typography';
+
+/* stylelint-disable function-parentheses-space-inside */
+/* stylelint-disable max-nesting-depth */
+
+.root {
+  // default variables
+
+  --color: transparent;
+  --gradient: none;
+  --background-color: #{colors.$grey-100};
+  --border-width: #{functions.rem(1)};
+  --padding: 0 #{functions.rem(6)};
+}
+
+.sm {
+  --height: #{functions.rem(18)};
+}
+
+.md {
+  --height: #{functions.rem(24)};
+}
+
+.gold {
+  --gradient: linear-gradient(
+    100.26deg,
+    #{colors.$red-60} 0%,
+    #{colors.$brand-orange} 100%
+  );
+}
+
+.grape {
+  --gradient: linear-gradient(
+    93.21deg,
+    #{colors.$blue-60} 0%,
+    #{colors.$purple-60} 100%
+  );
+}
+
+.silver {
+  --color: #{colors.$grey-75};
+}
+
+.red {
+  --color: #{colors.$error-60};
+}
+
+.green {
+  --color: #{colors.$brand-green};
+}
+
+.root {
+  align-items: center;
+  background-color: transparent;
+  background-image: var(--gradient);
+  border: var(--border-width) solid var(--color);
+  border-radius: functions.rem(4);
+  color: colors.$white;
+  cursor: pointer;
+  display: inline-flex;
+  height: var(--height);
+  justify-content: center;
+  line-height: initial;
+  padding: var(--padding);
+  position: relative;
+  transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+  user-select: none;
+  z-index: 1;
+
+  &::before {
+    background-color: var(--color);
+    background-image: var(--gradient);
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: inherit;
+    z-index: -1;
+  }
+
+  &:hover {
+    &::before {
+      opacity: 0.2;
+    }
+  }
+
+  &:active {
+    &::before {
+      opacity: 1;
+    }
+
+    .tail {
+      color: colors.$white;
+    }
+  }
+}
+
+.active {
+  &::before {
+    opacity: 0.4;
+  }
+}
+
+.badge {
+  pointer-events: none;
+}
+
+.gold,
+.grape {
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(
+    var(--background-color),
+    var(--background-color)
+  ),
+    var(--gradient);
+  background-origin: border-box;
+  border: solid var(--border-width) transparent;
+}
+
+%tail {
+  color: colors.$grey-65;
+  line-height: functions.rem(10);
+  transition: inherit;
+}
+
+.sm {
+  @extend %title-7;
+}
+
+.sm .tail {
+  @extend %caption-3;
+  @extend %tail;
+}
+
+.md {
+  @extend %title-6;
+}
+
+.md .tail {
+  @extend %caption-2;
+  @extend %tail;
+}
+
+.uppercase {
+  @extend %tagline-5;
+}
+
+.icon {
+  height: functions.rem(18);
+  margin-right: functions.rem(4);
+  width: functions.rem(18);
+}

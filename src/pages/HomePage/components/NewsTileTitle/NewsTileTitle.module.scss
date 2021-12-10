@@ -1,0 +1,21 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.title {
+  align-items: center;
+  color: colors.$brand-green;
+  display: flex;
+}
+
+.icon {
+  color: colors.$brand-green;
+  margin-right: functions.rem(5);
+}
+
+.tags {
+  margin-left: functions.rem(12);
+}
+
+.tag:not(:last-of-type) {
+  margin-right: functions.rem(6);
+}

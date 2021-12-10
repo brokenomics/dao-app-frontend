@@ -1,0 +1,164 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+$page-content-padding: functions.rem(48);
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-right: $page-content-padding;
+
+  .headerLeftPart {
+    display: flex;
+  }
+
+  .backButton {
+    margin-right: functions.rem(20);
+  }
+}
+
+.content {
+  margin-top: functions.rem(32);
+  padding-left: functions.rem(40);
+  padding-right: $page-content-padding;
+}
+
+.statusTile {
+  width: functions.rem(274);
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .row {
+    @extend %caption-2;
+    align-items: center;
+
+    color: colors.$grey-65;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .row:last-of-type {
+    margin: functions.rem(22) 0 functions.rem(18);
+  }
+
+  .hash {
+    width: fit-content;
+  }
+}
+
+.voteDetails {
+  margin: functions.rem(20) 0;
+
+  .voteTitle {
+    @extend %title-2;
+    color: colors.$white;
+  }
+
+  .generalInfo {
+    display: flex;
+  }
+
+  .infoBlock {
+    margin-right: functions.rem(60);
+  }
+
+  .voteBlock {
+    margin-top: functions.rem(94);
+  }
+}
+
+.allVotes {
+  display: flex;
+  margin-top: functions.rem(10);
+}
+
+.modalTitle {
+  margin-top: 0;
+}
+
+.confirmModal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  
+  + .col {
+    justify-items: flex-start;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .col p {
+    text-align: left;
+  }
+}
+
+.modalButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.voteButton {
+  margin: 10px;
+
+  .button {
+    width: 100%;
+  }
+}
+
+.submitButton {
+  margin: 10px;
+  margin-top: 30px;
+
+  .button {
+    width: 100%;
+  }
+}
+
+.voteContainer {
+  align-items: center;
+  background: colors.$grey-80;
+  border: functions.rem(1) solid colors.$grey-65;
+  display: flex;
+  flex: 1;
+  font-size: functions.rem(12);
+  height: functions.rem(56);
+  justify-content: center;
+
+  &:first-of-type {
+    border-radius: functions.rem(56) 0 0 functions.rem(56);
+    border-right: 0;
+  }
+
+  &:last-of-type {
+    border-left: 0;
+    border-radius: 0 functions.rem(56) functions.rem(56) 0;
+  }
+
+  &:first-of-type + &:last-of-type {
+    border-left: functions.rem(1) solid colors.$grey-65;
+  }
+
+  .values {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .percents {
+    text-transform: uppercase;
+  }
+
+  .votesPercentVal {
+    color: colors.$success-40;
+  }
+}

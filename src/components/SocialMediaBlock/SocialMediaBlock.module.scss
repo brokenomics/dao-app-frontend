@@ -1,0 +1,28 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: functions.rem(16);
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.mediaLink {
+  display: block;
+  padding: 0;
+  width: functions.rem(18);
+}
+
+.mediaImg {
+  color: colors.$grey-65;
+  display: block;
+  transition: color 0.3s;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: colors.$brand-green;
+  }
+}

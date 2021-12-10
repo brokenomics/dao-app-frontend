@@ -1,0 +1,15 @@
+@use 'styles/functions';
+
+.body {
+  padding-bottom: functions.rem(20);
+  padding-right: functions.rem(46);
+
+  :global(.simplebar-content) {
+    padding: 0 !important;
+  }
+}
+
+.hidden {
+  height: 0;
+  visibility: hidden;
+}

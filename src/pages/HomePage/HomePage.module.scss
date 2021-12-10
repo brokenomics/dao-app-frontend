@@ -1,0 +1,13 @@
+@use 'styles/functions';
+
+.root {
+  --tabs-padding: #{functions.rem(32)};
+
+  display: block;
+  height: 100%;
+}
+
+.tabs {
+  height: 100%;
+  padding-top: var(--tabs-padding);
+}

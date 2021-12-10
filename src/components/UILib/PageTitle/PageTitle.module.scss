@@ -1,0 +1,8 @@
+@use 'styles/functions';
+@import 'styles/typography';
+
+.title {
+  @extend %heading-5;
+  margin-left: functions.rem(40);
+  padding-top: functions.rem(32);
+}

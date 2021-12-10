@@ -1,0 +1,55 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+$height: functions.rem(4);
+
+.root {
+  position: relative;
+}
+
+.progress {
+  background-color: colors.$error-40;
+  border-radius: functions.rem(12);
+  height: $height;
+  position: relative;
+
+  &.mivValue {
+    margin-top: functions.rem(10);
+  }
+}
+
+.labelLine {
+  position: relative;
+}
+
+.runningLine {
+  background-color: colors.$success-40;
+  border-bottom-left-radius: functions.rem(12);
+  border-top-left-radius: functions.rem(12);
+  height: $height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: width 0.3s;
+
+  &.full {
+    border-radius: functions.rem(12);
+  }
+}
+
+.minValueBorder {
+  border-right: functions.rem(1) dashed colors.$white;
+  height: functions.rem(16);
+
+  position: absolute;
+  top: functions.rem(-6);
+  width: functions.rem(1);
+}
+
+.label {
+  @extend %title-7;
+  color: colors.$grey-65;
+  margin-top: functions.rem(6);
+  position: absolute;
+}

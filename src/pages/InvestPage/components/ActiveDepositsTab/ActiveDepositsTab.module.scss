@@ -1,0 +1,6 @@
+@use 'styles/functions';
+
+.root {
+  padding-bottom: functions.rem(97);
+  padding-top: functions.rem(35);
+}

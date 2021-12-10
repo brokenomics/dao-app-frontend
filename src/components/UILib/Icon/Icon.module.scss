@@ -1,0 +1,13 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.root {
+  color: colors.$white;
+  display: inline-block;
+  font-size: 0;
+  height: functions.rem(18);
+  line-height: 0;
+  user-select: none;
+  vertical-align: middle;
+  width: functions.rem(18);
+}

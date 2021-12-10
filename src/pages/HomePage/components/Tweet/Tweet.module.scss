@@ -1,0 +1,41 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@use 'styles/variables';
+@import 'styles/typography';
+
+.root {
+  display: flex;
+  font-family: variables.$roboto-font;
+  font-size: functions.rem(9);
+  font-weight: 400;
+  line-height: functions.rem(10);
+  text-align: left;
+}
+
+.profilePic {
+  margin-right: functions.rem(8);
+}
+
+.username {
+  color: colors.$white;
+  font-weight: 700;
+
+  text-align: left;
+}
+
+.tweetInfo {
+  align-items: center;
+  color: colors.$grey-65;
+  display: flex;
+}
+
+.icon {
+  color: colors.$grey-65;
+  margin: 0 functions.rem(3);
+  width: functions.rem(12);
+}
+
+.tweet {
+  line-height: functions.rem(13);
+  margin-bottom: functions.rem(4);
+}

@@ -1,0 +1,106 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+@mixin checked($opacity) {
+  background: linear-gradient(110.42deg,
+  rgba(colors.$purple-60, $opacity) 0%,
+  rgba(colors.$red-60, $opacity) 100%);
+}
+
+.checkboxContainer {
+  align-items: center;
+  border-radius: functions.rem(2);
+  display: inline-flex;
+  height: functions.rem(24);
+  justify-content: center;
+  vertical-align: middle;
+  width: functions.rem(24);
+}
+
+.checkMark {
+  height: functions.rem(24);
+  width: functions.rem(12);
+}
+
+.styledCheckbox {
+  align-items: center;
+  border: functions.rem(2) solid colors.$grey-65;
+  border-radius: functions.rem(2);
+  cursor: pointer;
+  display: flex;
+  height: functions.rem(16);
+  justify-content: center;
+  outline: none;
+  position: relative;
+  position: relative;
+  width: functions.rem(16);
+
+  &.disabled {
+    border-color: colors.$grey-75;
+    cursor: default;
+  }
+
+  &.disabled .circle {
+    display: none;
+  }
+
+  &:hover .circle {
+    background: rgba(colors.$grey-65, 0.1);
+    opacity: 1;
+  }
+
+  &:focus .circle {
+    background: rgba(colors.$grey-65, 0.2);
+    opacity: 1;
+  }
+
+  &:active .circle {
+    background: rgba(colors.$grey-65, 0.4);
+    opacity: 1;
+  }
+}
+
+.checked {
+  background: linear-gradient(110.42deg,
+  colors.$purple-60 0%,
+  colors.$red-60 100%);
+  border: none;
+
+  &.disabled {
+    background: colors.$grey-75;
+    color: colors.$grey-65;
+    cursor: default;
+  }
+
+  &.disabled .circle {
+    display: none;
+  }
+
+  &:hover .circle {
+    @include checked(0.15);
+    opacity: 1;
+  }
+
+  &:focus .circle {
+    @include checked(0.25);
+    opacity: 1;
+  }
+
+  &:active .circle {
+    @include checked(0.4);
+    opacity: 1;
+  }
+}
+
+.circle {
+  border-radius: functions.rem(40);
+  height: functions.rem(40);
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.2s;
+  width: functions.rem(40);
+}
+
+.hiddenCheckbox {
+  display: none;
+}

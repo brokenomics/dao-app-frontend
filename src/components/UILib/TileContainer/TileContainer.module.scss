@@ -1,0 +1,41 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+$border-radius: functions.rem(8);
+
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  @extend %title-5;
+  align-items: center;
+  background-color: colors.$grey-85;
+  border-radius: $border-radius $border-radius 0 0;
+  color: colors.$grey-65;
+  display: flex;
+  flex: 0 0 auto;
+  height: functions.rem(48);
+  padding: 0 functions.rem(24);
+}
+
+.body {
+  background-color: colors.$grey-95;
+  border-radius: 0 0 $border-radius $border-radius;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.content {
+  height: 100%;
+  padding: functions.rem(20) functions.rem(24);
+}
+
+.md {
+  .header {
+    height: functions.rem(56);
+    padding: 0 functions.rem(26);
+  }
+}

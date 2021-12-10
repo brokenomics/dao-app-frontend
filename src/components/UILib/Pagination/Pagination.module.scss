@@ -1,0 +1,89 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+
+  @extend %title-5;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.prevBlock,
+.nextBlock {
+  outline: none;
+}
+
+.next,
+.prev {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+}
+
+.prev {
+  margin-right: functions.rem(22);
+
+  .arrow {
+    margin-right: functions.rem(12);
+    transform: rotate(-90deg);
+  }
+}
+
+.next {
+  margin-left: functions.rem(22);
+
+  .arrow {
+    margin-left: functions.rem(12);
+    transform: rotate(90deg);
+  }
+}
+
+.disabledPrevNext {
+  color: colors.$grey-75;
+  pointer-events: none;
+
+  .arrow {
+    color: colors.$grey-75;
+  }
+}
+
+.page {
+  align-items: center;
+
+  border-radius: functions.rem(4);
+  cursor: pointer;
+  display: flex;
+  height: functions.rem(24);
+  position: relative;
+
+  &::after {
+    background: linear-gradient(110.42deg, #9e00ff 0%, #f10939 100%);
+    border-radius: 16px;
+    bottom: -4px;
+    content: '';
+    left: -4px;
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: -1;
+  }
+
+  &:not(:last-of-type) {
+    margin-right: functions.rem(2);
+  }
+
+  .pageLink {
+    outline: none;
+    padding: 0 functions.rem(6);
+  }
+}
+
+.active {
+  background-clip: content-box, border-box;
+  background-image: linear-gradient(#252525, #252525), linear-gradient(to right, #9e00ff, #f10939);
+  background-origin: border-box;
+  border: solid 1px transparent;
+}

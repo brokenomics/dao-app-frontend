@@ -1,0 +1,73 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  display: flex;
+  height: functions.rem(134);
+}
+
+.media {
+  object-fit: cover;
+  width: functions.rem(240);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: functions.rem(18);
+  width: 100%;
+}
+
+.infoBlock {
+  align-items: center;
+  display: flex;
+  height: functions.rem(18);
+  width: 100%;
+}
+
+.tag {
+  margin-right: functions.rem(12);
+}
+
+.infoText {
+  @extend %caption-1;
+  color: colors.$grey-75;
+}
+
+.dateTime {
+  margin-left: auto;
+}
+
+.newsText {
+  @extend %title-4;
+  font-weight: 500;
+  line-height: functions.rem(24);
+  margin-top: functions.rem(6);
+  max-height: functions.rem(72);
+  max-width: functions.rem(396);
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+
+  &::before {
+    background-color: colors.$grey-95;
+    bottom: 0;
+    box-shadow: functions.rem(-4) functions.rem(0) functions.rem(5)
+      colors.$grey-95;
+    content: '...';
+    padding-left: functions.rem(2);
+    padding-right: functions.rem(5);
+    position: absolute;
+    right: 0;
+  }
+
+  &::after {
+    background-color: colors.$grey-95;
+    content: '';
+    height: functions.rem(20);
+    position: absolute;
+    right: 0;
+    width: functions.rem(20);
+  }
+}

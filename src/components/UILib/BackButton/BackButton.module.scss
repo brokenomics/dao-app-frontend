@@ -1,0 +1,16 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.backButton {
+  @extend %title-6;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+
+  .backIcon {
+    color: colors.$grey-65;
+    margin-right: functions.rem(10);
+    transform: rotate(-90deg);
+  }
+}

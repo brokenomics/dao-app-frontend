@@ -1,0 +1,45 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  align-items: center;
+  border: 1px solid colors.$grey-80;
+
+  border-radius: functions.rem(36);
+  cursor: pointer;
+
+  display: flex;
+  height: functions.rem(36);
+  padding: 0 functions.rem(20) 0 functions.rem(14);
+  width: fit-content;
+}
+
+.label {
+  @extend %title-5;
+  color: colors.$grey-65;
+  margin-right: functions.rem(6);
+}
+
+.value {
+  @extend %body-2;
+  margin-right: functions.rem(16);
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.closed {
+  transform: rotate(180deg);
+}
+
+.valueOnly {
+  border: none;
+  padding-left: 0;
+}
+
+.hidden {
+  display: none;
+}

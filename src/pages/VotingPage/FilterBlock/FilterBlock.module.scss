@@ -1,0 +1,23 @@
+@use 'styles/functions';
+
+.filterBlock {
+  align-items: center;
+  display: flex;
+}
+
+.statusFilterBlock {
+  margin-right: functions.rem(20);
+}
+
+.statusFilterTag {
+  margin: 0 functions.rem(4);
+  text-transform: capitalize;
+
+  &:first-of-type {
+    margin-left: functions.rem(12);
+  }
+}
+
+.selectFilter {
+  margin-right: functions.rem(10);
+}

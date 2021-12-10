@@ -1,0 +1,12 @@
+<svg viewBox="0 0 259 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M259 6L249 0.226498L249 11.7735L259 6ZM7.45963e-08 7.00002L250 7L250 5L-7.45963e-08 5.00002L7.45963e-08 7.00002Z"
+    fill="url(#transfer-arrow-image)" />
+  <defs>
+    <linearGradient id="transfer-arrow-image" x1="0" y1="6.00004" x2="259" y2="6" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9E00FF" stop-opacity="0" />
+      <stop offset="0.162262" stop-color="#AA02E4" />
+      <stop offset="1" stop-color="#F10939" />
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,50 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+$border-radius: functions.rem(8);
+$cell-left-padding: functions.rem(24);
+
+.root {
+
+  @extend %title-5;
+  color: colors.$grey-65;
+  width: 100%;
+}
+
+.headerCell {
+  background-color: colors.$grey-85;
+  min-height: functions.rem(56);
+  padding: functions.rem(16) 0 functions.rem(16) $cell-left-padding;
+
+  &:first-of-type {
+    border-radius: $border-radius 0 0 0;
+  }
+
+  &:last-of-type {
+    border-radius: 0 $border-radius 0 0;
+  }
+}
+
+.row {
+  background-color: colors.$grey-95;
+
+  &.even {
+    background-color: colors.$grey-90;
+  }
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  &.clickable:hover {
+    background-color: colors.$grey-85;
+  }
+}
+
+.cell {
+  align-items: center;
+
+  display: flex;
+  padding-left: $cell-left-padding;
+}

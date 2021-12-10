@@ -1,0 +1,98 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  width: functions.rem(288);
+}
+
+.tile {
+  border-radius: functions.rem(8);
+
+  display: flex;
+  flex-direction: column;
+  height: functions.rem(366);
+  margin-bottom: functions.rem(12);
+}
+
+.tilePart {
+  align-items: center;
+  background-color: colors.$grey-95;
+  border-radius: functions.rem(8) functions.rem(8) 0 0;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-left: functions.rem(32);
+  padding-right: functions.rem(32);
+  padding-top: functions.rem(32);
+
+  &:last-of-type {
+    background-color: colors.$grey-85;
+    border-radius: 0 0 functions.rem(8) functions.rem(8);
+  }
+}
+
+.lockMsg {
+  @extend %tagline-4;
+  color: colors.$grey-65;
+  margin-bottom: functions.rem(28);
+  margin-top: functions.rem(24);
+}
+
+.infoLine {
+  @extend %caption-1;
+
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: functions.rem(8);
+
+  .value {
+    color: colors.$success-50;
+  }
+}
+
+.currency {
+  @extend %tagline-4;
+}
+
+.strategy {
+  @extend %caption-2;
+  color: colors.$grey-65;
+
+  margin-top: functions.rem(28);
+}
+
+.percentValue {
+  @extend %title-1;
+  color: colors.$success-50;
+}
+
+.percent {
+  @extend %tagline-5;
+}
+
+.balance {
+  @extend %caption-1;
+
+  align-self: baseline;
+  color: colors.$grey-65;
+  margin-bottom: functions.rem(24);
+  margin-top: functions.rem(4);
+}
+
+.balanceValue {
+  color: colors.$white;
+}
+
+.depositButton {
+  width: functions.rem(224);
+}
+
+.maxButton {
+  border: none;
+  font-size: functions.rem(14);
+  position: absolute;
+  right: functions.rem(5);
+}

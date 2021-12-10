@@ -1,0 +1,63 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  align-items: center;
+  background: colors.$grey-85;
+  border-radius: functions.rem(26);
+  color: colors.$white;
+  display: flex;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background: colors.$white;
+    color: colors.$grey-85;
+    cursor: pointer;
+  }
+}
+
+.short {
+  &.sm {
+    height: functions.rem(18);
+  }
+
+  &.md {
+    height: functions.rem(24);
+    width: functions.rem(102);
+  }
+}
+
+.long {
+  &.sm {
+    height: functions.rem(18);
+    width: functions.rem(258);
+  }
+
+  &.md {
+    height: functions.rem(24);
+    width: functions.rem(264);
+  }
+}
+
+.dot {
+  background: linear-gradient(93.21deg, colors.$blue-60 0%, colors.$purple-60 100%);
+  border-radius: functions.rem(30);
+
+  &.sm {
+    height: functions.rem(18);
+    width: functions.rem(18);
+  }
+
+  &.md {
+    height: functions.rem(24);
+    width: functions.rem(24);
+  }
+}
+
+.hashNum {
+  @extend %tagline-6;
+  margin: 0 0 0 functions.rem(6);
+  padding-right: functions.rem(6);
+}

@@ -1,0 +1,15 @@
+@use 'styles/functions';
+
+.body {
+  margin-top: functions.rem(20);
+  overflow-y: auto;
+  padding-right: functions.rem(24);
+  position: fixed;
+  right: 0;
+  scrollbar-width: none;
+  z-index: 10;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,86 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  background-color: colors.$grey-95;
+  border-radius: functions.rem(8);
+  display: flex;
+  flex-direction: column;
+  padding: functions.rem(24);
+  width: functions.rem(273);
+
+  &.clickable {
+    cursor: pointer;
+  }
+}
+
+.container {
+  align-items: center;
+  display: flex;
+}
+
+.status {
+  margin-bottom: functions.rem(12);
+}
+
+.openClosed {
+  margin-left: auto;
+}
+
+.sectionTip {
+  @extend %caption-2;
+  color: colors.$grey-65;
+}
+
+.voteLaunch {
+  @extend %title-6;
+  justify-content: space-between;
+  margin-bottom: functions.rem(24);
+}
+
+.votingTypeTag {
+  margin-bottom: functions.rem(4);
+  text-transform: capitalize;
+  width: functions.rem(74);
+}
+
+.votingTitle {
+  @extend %title-3;
+  margin-bottom: functions.rem(16);
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.descriptionBody {
+  @extend %body-2;
+  margin-bottom: 0;
+  margin-top: functions.rem(2);
+  max-height: functions.rem(96);
+  overflow: hidden;
+  position: relative;
+  width: functions.rem(225);
+  word-break: break-all;
+
+  &::before {
+    background-color: colors.$grey-95;
+    bottom: 0;
+    box-shadow: functions.rem(-4) functions.rem(0) functions.rem(5)
+      colors.$grey-95;
+    content: '...';
+    padding-left: functions.rem(2);
+    padding-right: functions.rem(5);
+    position: absolute;
+    right: 0;
+  }
+
+  &::after {
+    background-color: colors.$grey-95;
+    content: '';
+    height: functions.rem(20);
+    position: absolute;
+    right: 0;
+    width: functions.rem(20);
+  }
+}
+

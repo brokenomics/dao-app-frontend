@@ -1,0 +1,63 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+/* stylelint-disable max-nesting-depth */
+
+.menuItem {
+  align-items: center;
+  display: flex;
+  height: functions.rem(32);
+  padding-left: functions.rem(24);
+  position: relative;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: colors.$grey-75;
+
+    .menuIcon {
+      color: colors.$white;
+    }
+  }
+
+  &.active {
+    background-color: colors.$grey-85;
+    color: colors.$brand-green;
+
+    .menuIcon {
+      color: colors.$brand-green;
+    }
+  }
+
+  &.disabled {
+    color: colors.$grey-75;
+    pointer-events: none;
+  }
+}
+
+.link {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+}
+
+.menuIcon {
+  color: colors.$grey-65;
+  margin-right: functions.rem(10);
+  transition: inherit;
+}
+
+.active .menuIcon {
+  color: colors.$white;
+}
+
+.menuElement {
+  padding-right: functions.rem(10);
+}
+
+.marker {
+  left: 0;
+  position: absolute;
+  top: 0;
+}

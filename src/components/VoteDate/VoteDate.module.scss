@@ -1,0 +1,17 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  @extend %caption-2;
+}
+
+.date {
+  color: colors.$white;
+  margin-left: auto;
+  margin-right: functions.rem(4);
+}
+
+.time {
+  color: colors.$grey-65;
+}

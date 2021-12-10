@@ -1,0 +1,44 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.balanceChange {
+  @extend %caption-2;
+}
+
+.assetCell {
+  color: colors.$white;
+}
+
+.narrowColumns {
+  max-width: functions.rem(150) !important;
+}
+
+.balanceInfo {
+  color: colors.$white;
+  text-align: right;
+}
+
+.balance {
+  @extend %title-3;
+}
+
+.rate {
+  @extend %title-7;
+}
+
+.positive {
+  color: colors.$success-40;
+}
+
+.negative {
+  color: colors.$error-40;
+}
+
+.actionCell {
+  max-width: functions.rem(340) !important;
+}
+
+.noDepositImg {
+  max-width: 20%;
+}

@@ -1,0 +1,49 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.dropdown {
+  z-index: 99;
+
+  .arrow {
+    border-bottom-color: inherit;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-style: solid;
+    border-top-color: transparent;
+
+    border-width: 0 functions.rem(8) functions.rem(8) functions.rem(8);
+
+    height: 0;
+    top: functions.rem(-8);
+
+    width: 0;
+  }
+
+  &[data-popper-placement^='top'] > .arrow {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+
+    border-top-color: inherit;
+    border-width: functions.rem(8) functions.rem(8) 0 functions.rem(8);
+    bottom: functions.rem(-8);
+  }
+
+  &[data-popper-placement^='left'] > .arrow {
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: inherit;
+
+    border-top-color: transparent;
+    border-width: functions.rem(8) functions.rem(8) functions.rem(8) 0;
+  }
+
+  &[data-popper-placement^='right'] > .arrow {
+    border-bottom-color: transparent;
+    border-left-color: inherit;
+    border-right-color: transparent;
+
+    border-top-color: transparent;
+    border-width: functions.rem(8) 0 functions.rem(8) functions.rem(8);
+  }
+}

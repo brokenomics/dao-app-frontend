@@ -1,0 +1,9 @@
+@use 'styles/functions';
+
+.actionButtons {
+  display: flex;
+}
+
+.button {
+  margin-right: functions.rem(15);
+}

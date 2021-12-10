@@ -1,0 +1,90 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  --height: #{functions.rem(24)};
+  --background-color: #{colors.$grey-100};
+  --gradient: linear-gradient(110.42deg, #{colors.$brand-green}, #{colors.$brand-green});
+  background: transparent;
+  border: none;
+
+  border-radius: calc(var(--height) / 2);
+  box-shadow: inset 0 0 0 2px colors.$grey-75;
+  display: block;
+  height: var(--height);
+  max-width: functions.rem(182);
+  outline: none;
+  position: relative;
+  user-select: none;
+  width: 100%;
+}
+
+.slider {
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(var(--background-color), var(--background-color)),var(--gradient);
+  background-origin: border-box;
+  border: functions.rem(2) solid transparent;
+  border-radius: inherit;
+  cursor: pointer;
+  display: block;
+  height: inherit;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transform: translateX(100%);
+  transition: opacity 0.3s, transform 0.3s cubic-bezier(0.71, 0.15, 1, 0.31);
+  width: 50%;
+  z-index: 1;
+
+  &::before {
+    background-image: var(--gradient);
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    opacity: 0.2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: inherit;
+    z-index: 2;
+  }
+
+  &:hover::before {
+    opacity: 0.4;
+  }
+
+  &:active::before {
+    opacity: 1;
+  }
+}
+
+.options {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  height: inherit;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3;
+}
+
+.option {
+  @extend %title-6;
+
+  flex: 0 0 50%;
+  overflow: hidden;
+  padding: 0 functions.rem(7);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.checkbox:checked ~ .slider {
+  transform: translateX(0);
+}

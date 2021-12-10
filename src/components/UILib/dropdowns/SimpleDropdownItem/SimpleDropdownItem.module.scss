@@ -1,0 +1,24 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.root {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: functions.rem(32);
+  min-width: functions.rem(110);
+  outline: none;
+  padding: 0 functions.rem(16);
+
+  &.selected {
+    background-color: colors.$grey-80;
+  }
+
+  &:hover {
+    background-color: colors.$grey-75;
+  }
+
+  &:active {
+    background-color: colors.$grey-80;
+  }
+}

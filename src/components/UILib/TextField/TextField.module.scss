@@ -1,0 +1,234 @@
+@use 'styles/functions';
+@use 'styles/colors';
+@import 'styles/typography';
+
+.root {
+  --input-color: #{colors.$white};
+  --input-border-color: #{colors.$grey-75};
+  --input-border-width: 1px;
+
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  caret-color: #{colors.$purple-40};
+  color: var(--input-color);
+  flex: 1;
+  outline: none;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &.xs {
+    @extend %caption-1;
+    height: functions.rem(36);
+    padding: functions.rem(9) functions.rem(12);
+  }
+
+  &.sm {
+    @extend %body-2;
+    height: functions.rem(40);
+    padding: functions.rem(8) functions.rem(12);
+  }
+
+  &.md {
+    @extend %body-2;
+    height: functions.rem(48);
+    padding: functions.rem(12);
+  }
+
+  &.lg {
+    @extend %body-1;
+    height: functions.rem(56);
+    padding: functions.rem(16) functions.rem(12);
+  }
+}
+
+.input.textarea {
+  height: functions.rem(176);
+  padding: functions.rem(12) functions.rem(16);
+  resize: none;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  &:not(.withError):not(.disabled):hover:not(.focus) {
+    --input-border-color: #{colors.$grey-65};
+    --input-border-width: 2px;
+  }
+}
+
+.inputContainer {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.inputWrap {
+  align-items: center;
+  display: flex;
+  flex: 1;
+}
+
+.leftElement {
+  margin-left: functions.rem(8);
+  margin-right: functions.rem(4);
+}
+
+.rightElement {
+  align-items: center;
+  display: flex;
+  margin-left: functions.rem(4);
+  margin-right: functions.rem(17);
+}
+
+.border {
+  border: solid var(--input-border-width) var(--input-border-color);
+  border-radius: functions.rem(8);
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  padding-left: functions.rem(12);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: functions.rem(-6);
+  transition: box-shadow 0.35s ease-in-out;
+  z-index: 0;
+}
+
+.legend {
+  display: block;
+  height: functions.rem(12);
+  margin-left: functions.rem(-6);
+  max-width: 0;
+  padding: 0;
+  text-align: left;
+  visibility: hidden;
+}
+
+.legend span {
+  @extend %caption-2;
+  display: block;
+  line-height: functions.rem(12);
+  padding: 0 functions.rem(4);
+}
+
+.label {
+  color: var(--input-border-color);
+  left: 0;
+  line-height: 1;
+  max-width: 90%;
+  position: absolute;
+  top: 0;
+  transform-origin: top left;
+  transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    font-size 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  user-select: none;
+
+  &.xs {
+    @extend %body-2;
+    transform: translate(functions.rem(16), functions.rem(6));
+  }
+
+  &.sm {
+    @extend %body-2;
+    transform: translate(functions.rem(16), functions.rem(8));
+  }
+
+  &.md {
+    @extend %body-2;
+    transform: translate(functions.rem(16), functions.rem(12));
+  }
+
+  &.lg {
+    @extend %body-1;
+    transform: translate(functions.rem(16), functions.rem(14));
+  }
+}
+
+.error {
+  @extend %caption-1;
+  align-items: center;
+  color: #{colors.$error-40};
+  display: flex;
+  left: 0;
+  margin: functions.rem(8) 0 0;
+  position: absolute;
+  top: 100%;
+}
+
+.errorIcon {
+  align-self: flex-start;
+  color: #{colors.$error-40};
+  display: block;
+  margin-right: functions.rem(5);
+}
+
+.withError {
+  --input-border-color: #{colors.$error-40};
+  --input-border-width: 2px;
+}
+
+.success {
+  --input-border-color: #{colors.$grey-65};
+}
+
+.disabled {
+  --input-border-color: #{colors.$grey-50};
+  --input-color: #{colors.$grey-50};
+}
+
+.focus:not(.withError) {
+  --input-border-color: #{colors.$purple-40};
+  --input-border-width: 2px;
+}
+
+.focus,
+.filled {
+  .label {
+    @extend %caption-2;
+    line-height: 1;
+    transform: translate(functions.rem(12), functions.rem(-6));
+  }
+
+  .legend {
+    max-width: 1000px;
+  }
+}
+
+.helperText {
+  @extend %caption-1;
+  color: #{colors.$grey-65};
+  left: 0;
+  margin-top: functions.rem(8);
+  position: absolute;
+  top: 100%;
+
+  &.short {
+    width: 90%;
+  }
+}
+
+.length {
+  @extend %caption-1;
+  color: var(--input-border-color);
+  margin-top: functions.rem(8);
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+

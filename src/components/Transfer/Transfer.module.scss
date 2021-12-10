@@ -1,0 +1,274 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+/* stylelint-disable max-nesting-depth */
+
+.root {
+  background-color: colors.$grey-85;
+  border-radius: functions.rem(8);
+  column-gap: functions.rem(42);
+  display: flex;
+  height: functions.rem(262);
+  justify-content: space-between;
+  padding: 0 functions.rem(32);
+  position: absolute;
+  right: 0;
+  top: functions.rem(48);
+  width: functions.rem(504);
+  z-index: 3;
+}
+
+.ico {
+  color: colors.$grey-65;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: colors.$blue-60;
+  }
+
+  &:focus {
+    color: colors.$white;
+  }
+}
+
+.column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  margin-top: functions.rem(33);
+
+  &.center {
+    margin: functions.rem(13) 0 0;
+    position: relative;
+  }
+}
+
+.currencyLogo {
+  height: functions.rem(68);
+  margin-top: functions.rem(9);
+  object-fit: contain;
+  transition: 0.4s;
+  user-select: none;
+  width: functions.rem(68);
+}
+
+.currencyLogoSmall {
+  transform: scale(0.7);
+}
+
+.actionDescription {
+  @extend %title-6;
+
+  color: colors.$grey-65;
+  padding-right: functions.rem(23);
+  position: relative;
+}
+
+.swapDirection {
+  position: absolute;
+}
+
+.enterAmount {
+  @extend %title-3;
+}
+
+.hashContainer {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: functions.rem(12);
+}
+
+.hash {
+  @extend %caption-2;
+  height: functions.rem(24);
+}
+
+.currencyName {
+  @extend %heading-6;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: functions.rem(28.5);
+}
+
+.amountHolder {
+  height: functions.rem(56);
+  margin-top: functions.rem(18);
+  position: relative;
+  width: 100%;
+}
+
+.amount {
+  height: 100%;
+  left: functions.rem(-42);
+  position: absolute;
+  right: functions.rem(-42);
+}
+
+.amountInput {
+  @extend %heading-3;
+
+  background: none;
+  border: none;
+  caret-color: colors.$white;
+  color: colors.$grey-75;
+  height: 100%;
+  outline: none;
+  padding: 0;
+  text-align: center;
+  transition: font-size 0.2s;
+  width: 100%;
+
+  &:not([value='']) ~ .amountPlaceholder {
+    opacity: 0;
+  }
+}
+
+.fakeAmountInput {
+  @extend %heading-3;
+
+  color: transparent;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  width: auto;
+}
+
+.amountPlaceholder {
+  @extend %heading-3;
+  bottom: 0;
+
+  color: colors.$grey-75;
+  display: flex;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  > div {
+    width: 50%;
+
+    &:first-child {
+      text-align: right;
+    }
+  }
+}
+
+.transferWrapper {
+  margin: functions.rem(18) auto 0 auto;
+  position: relative;
+}
+
+.transferDirection {
+  left: functions.rem(-42);
+  position: absolute;
+  right: functions.rem(-42);
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s;
+
+  &.left {
+    transform: translateY(-50%) scaleX(-1);
+  }
+}
+
+.reverseButton {
+  height: auto;
+  margin: functions.rem(9) auto 0;
+  padding: functions.rem(3) functions.rem(12) functions.rem(6);
+
+  &:hover,
+  &:active {
+    --background-color: #{colors.$grey-80};
+
+    svg.reverseIcon {
+      color: colors.$blue-60;
+    }
+  }
+}
+
+svg.reverseIcon {
+  color: colors.$grey-65;
+  height: functions.rem(24);
+  margin: 0 auto;
+  width: functions.rem(24);
+}
+
+.reverseText {
+  @extend %caption-3;
+  color: colors.$white;
+}
+
+.arrowEllipse {
+  bottom: functions.rem(55);
+  height: functions.rem(58);
+  offset-path: path('M 3 3 C 105 93 226 55 278 6');
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: functions.rem(284);
+  z-index: 1;
+
+  &.left {
+    transform: scaleX(-1);
+
+    &.active {
+      animation-name: arrowAnimationLeft;
+    }
+  }
+
+  &.right {
+    transform: scaleX(1);
+
+    &.active {
+      animation-name: arrowAnimationRight;
+    }
+  }
+
+  &.active {
+    animation-delay: 0;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes arrowAnimationRight {
+  0% {
+    offset-distance: 43%;
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0.8;
+  }
+
+  100% {
+    offset-distance: 57%;
+    opacity: 0;
+  }
+}
+
+@keyframes arrowAnimationLeft {
+  0% {
+    offset-distance: 57%;
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 0.8;
+  }
+
+  100% {
+    offset-distance: 43%;
+    opacity: 0;
+  }
+}

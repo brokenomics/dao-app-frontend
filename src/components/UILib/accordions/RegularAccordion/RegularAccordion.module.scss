@@ -1,0 +1,19 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+$padding: functions.rem(16);
+
+.accordion {
+  background-color: colors.$grey-80;
+  color: colors.$white;
+}
+
+.header {
+  box-sizing: border-box;
+  height: functions.rem(40);
+  padding: 0 $padding;
+}
+
+.body {
+  padding: functions.rem(6) $padding;
+}

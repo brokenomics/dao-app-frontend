@@ -1,0 +1,15 @@
+@use 'mixins';
+
+@include mixins.font-face('Roboto', '../fonts/roboto/Roboto-Regular');
+
+@include mixins.font-face(
+  america,
+  '../fonts/gt-america-mono/regular/GT-America-Mono-Regular',
+  400
+);
+
+@include mixins.font-face(
+  america,
+  '../fonts/gt-america-mono/bold/GT-America-Mono-Bold',
+  700
+);

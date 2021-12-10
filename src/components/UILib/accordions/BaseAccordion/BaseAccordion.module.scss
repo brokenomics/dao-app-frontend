@@ -1,0 +1,35 @@
+@use 'styles/functions';
+
+.accordion {
+  border-radius: functions.rem(4);
+}
+
+.header {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  outline: none;
+  transition-duration: inherit;
+}
+
+.arrow {
+  transition-duration: inherit;
+  transition-property: transform;
+}
+
+.body {
+  overflow: hidden;
+  transition-duration: inherit;
+  transition-property: max-height;
+}
+
+.accordion[aria-expanded='false'] {
+  .arrow {
+    transform: rotate(180deg);
+  }
+
+  .body {
+    max-height: 0;
+  }
+}

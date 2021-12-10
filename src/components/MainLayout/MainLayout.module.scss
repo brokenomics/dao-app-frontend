@@ -1,0 +1,71 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.root {
+  --horizontal-padding: #{functions.rem(24)};
+  --header-height: #{functions.rem(72)};
+
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.content {
+  background-color: colors.$grey-100;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panelContainer {
+  background-color: colors.$grey-95;
+  box-shadow: functions.rem(5) functions.rem(5) functions.rem(20)
+    rgba(colors.$black, 20%),
+    functions.rem(-5) functions.rem(-5) functions.rem(20)
+    rgba(colors.$black, 20%);
+  min-width: functions.rem(200);
+  position: relative;
+  z-index: 1;
+}
+
+.panel {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  padding: functions.rem(20) 0 functions.rem(16);
+}
+
+.logoSection {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 var(--horizontal-padding) functions.rem(24);
+}
+
+.logo {
+  display: block;
+  height: functions.rem(40);
+}
+
+.header {
+  align-items: center;
+  background-color: colors.$grey-95;
+  column-gap: functions.rem(8);
+  display: flex;
+  height: var(--header-height);
+  justify-content: flex-end;
+  padding: 0 functions.rem(40);
+}
+
+.socialMedia {
+  padding: 0 var(--horizontal-padding);
+}
+
+.main {
+  flex: 1;
+  min-height: functions.rem(400);
+}

@@ -1,0 +1,44 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.container {
+  align-items: center;
+  background: colors.$grey-85;
+  border-radius: functions.rem(47);
+  cursor: pointer;
+  display: flex;
+  height: functions.rem(40);
+  justify-content: center;
+  min-width: functions.rem(112);
+  overflow: hidden;
+  padding: 0 functions.rem(24);
+  position: relative;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.balanceAmount {
+  @extend %title-4;
+  z-index: 1;
+}
+
+.fill {
+  background: linear-gradient(93.21deg, colors.$blue-60, colors.$purple-60);
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.tooltipBody {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.claimButton {
+  --background-color: #{colors.$grey-80};
+  font-weight: 600;
+  margin-top: functions.rem(8);
+}

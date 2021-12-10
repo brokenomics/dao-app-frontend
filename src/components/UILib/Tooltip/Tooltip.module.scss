@@ -1,0 +1,17 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.arrow {
+  color: colors.$grey-80;
+}
+
+.tooltipBody {
+  align-items: center;
+  background: colors.$grey-80;
+  border-radius: functions.rem(8);
+  display: flex;
+  justify-content: center;
+  min-height: functions.rem(60);
+  min-width: functions.rem(136);
+  padding: functions.rem(12) functions.rem(16);
+}

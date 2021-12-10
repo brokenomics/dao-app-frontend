@@ -1,0 +1,22 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  width: 100%;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+}
+
+.logo {
+  height: functions.rem(24);
+  margin-right: functions.rem(8);
+  width: functions.rem(24);
+}
+
+.label {
+  font-weight: 500;
+}

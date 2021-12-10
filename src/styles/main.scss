@@ -1,0 +1,37 @@
+@use 'colors';
+@use 'variables';
+@use 'functions';
+@import 'fonts';
+
+body {
+  box-sizing: border-box;
+  color: colors.$white;
+  font-family: variables.$main-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* scrollbar */
+
+.simplebar-track {
+  &.simplebar-vertical {
+    width: functions.rem(8);
+  }
+
+  &.simplebar-horizontal {
+    height: functions.rem(8);
+  }
+}
+
+.simplebar-scrollbar::before {
+  background-color: colors.$grey-70;
+}

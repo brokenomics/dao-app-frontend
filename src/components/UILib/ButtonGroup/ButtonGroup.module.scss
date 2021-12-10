@@ -1,0 +1,55 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.root {
+  display: flex;
+  justify-content: stretch;
+}
+
+.button {
+  --padding: 0 #{functions.rem(32)};
+
+  flex: 1 1 50%;
+
+  &:first-child {
+    --border-radius: calc(var(--height) / 2) 0 0 calc(var(--height) / 2);
+    --border-width-right: #{functions.rem(1)};
+  }
+
+  &:last-child {
+    --border-radius: 0 calc(var(--height) / 2) calc(var(--height) / 2) 0;
+    --border-width-left: #{functions.rem(1)};
+    --gradient: linear-gradient(110.42deg, #{colors.$brand-green}, #{colors.$brand-green});
+  }
+}
+
+.inactive {
+  .button {
+    --padding: 0 #{functions.rem(30)};
+
+    background-color: colors.$grey-85;
+    border-color: colors.$grey-75;
+    color: colors.$white;
+  }
+}
+
+.disabled {
+  .button {
+    --padding: 0 #{functions.rem(30)};
+
+    background-color: colors.$grey-85;
+    border-color: colors.$grey-75;
+  }
+
+  .label {
+    color: colors.$grey-65;
+  }
+}
+
+.labelGreen {
+  color: colors.$success-40;
+}
+
+.labelRed {
+  color: colors.$error-40;
+}

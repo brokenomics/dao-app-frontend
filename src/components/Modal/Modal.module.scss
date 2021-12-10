@@ -1,0 +1,36 @@
+@use 'styles/functions';
+@use 'styles/colors';
+
+.root {
+  background-color: rgb(colors.$grey-100, 0.7);
+  height: 100%;
+  left: 0;
+  overflow-y: auto;
+  padding: functions.rem(30) 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.modal {
+  background-color: colors.$grey-85;
+  border-radius: functions.rem(16);
+  margin: 0 auto;
+  padding: functions.rem(40);
+  position: relative;
+  width: functions.rem(448);
+}
+

@@ -1,0 +1,31 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  background: bottom right no-repeat;
+  background-image: url('../../images/dotted-background.svg');
+  display: block;
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  padding-left: functions.rem(40);
+}
+
+.header {
+  @extend %heading-5;
+  margin-bottom: functions.rem(18);
+  margin-left: 0;
+  margin-top: functions.rem(32);
+}
+
+.tip {
+  @extend %paragraph-3;
+  margin-bottom: functions.rem(32);
+  margin-top: 0;
+  width: functions.rem(576);
+}
+
+.noDropsImg {
+  margin-left: functions.rem(150);
+  margin-top: functions.rem(142);
+}

@@ -1,0 +1,19 @@
+@use 'styles/functions';
+@import 'styles/typography';
+
+.noDataBody {
+
+  @extend %body-1;
+  align-items: center;
+
+  display: flex;
+  flex-direction: column;
+  height: functions.rem(216);
+  justify-content: center;
+}
+
+.bell {
+  height: functions.rem(96);
+  margin-bottom: functions.rem(16);
+  width: functions.rem(96);
+}

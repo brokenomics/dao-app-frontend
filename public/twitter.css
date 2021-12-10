@@ -1,0 +1,12 @@
+.timeline-Viewport {
+  height: fit-content !important;
+  overflow: auto !important;
+}
+
+.timeline-Widget {
+  background: #1c1c1c;
+}
+
+.timeline-Tweet {
+  background: #1c1c1c !important;
+}

@@ -1,0 +1,43 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+$border-radius: functions.rem(8);
+$header-height: functions.rem(56);
+
+.root {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  width: functions.rem(40);
+}
+
+.popup {
+  background-color: colors.$grey-85;
+  border-radius: $border-radius;
+  max-height: functions.rem(636);
+  min-height: functions.rem(272);
+  width: functions.rem(600);
+  z-index: 1;
+}
+
+.arrow {
+  color: colors.$grey-80;
+}
+
+.header {
+  align-items: center;
+  background-color: colors.$grey-80;
+  border-radius: $border-radius $border-radius 0 0;
+
+  display: flex;
+  height: $header-height;
+
+  padding: 0 functions.rem(24);
+}
+
+
+.body {
+  height: calc(100% - #{$header-height});
+  overflow-y: auto;
+}

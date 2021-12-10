@@ -1,0 +1,138 @@
+@use 'styles/colors';
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  align-items: center;
+  background: colors.$grey-85;
+  border: none;
+  border-radius: functions.rem(56);
+  display: flex;
+  height: functions.rem(40);
+  position: relative;
+  width: functions.rem(384);
+}
+
+.balance {
+  @extend %title-4;
+
+  column-gap: functions.rem(4);
+  display: flex;
+  flex: 0 0 functions.rem(107);
+  justify-content: center;
+}
+
+.balanceSpinner {
+  --loader-size: #{functions.rem(23)};
+}
+
+.verticalLine {
+  background-color: colors.$grey-75;
+  flex: 0 0 functions.rem(1);
+  height: 100%;
+}
+
+.logo {
+  height: functions.rem(32);
+  margin-left: functions.rem(16);
+  margin-right: functions.rem(8);
+  width: functions.rem(32);
+}
+
+.buttonPanel {
+  column-gap: functions.rem(12);
+  display: grid;
+  flex: 0 0 functions.rem(90);
+  grid-template:
+    'transfer dots wallets'
+    / functions.rem(28) functions.rem(18) functions.rem(18);
+  margin-right: functions.rem(16);
+}
+
+.icon {
+  color: colors.$grey-65;
+  cursor: pointer;
+  display: block;
+  transition: color 0.3s;
+
+  &.active {
+    color: colors.$white;
+  }
+
+  &:hover {
+    color: colors.$blue-60;
+  }
+}
+
+.transferContainer {
+  grid-area: transfer;
+  margin-right: functions.rem(10);
+}
+
+.dotsContainer {
+  grid-area: dots;
+}
+
+.walletsContainer {
+  grid-area: wallets;
+}
+
+.tooltipArrow {
+  color: colors.$grey-80;
+  margin-top: functions.rem(-4);
+}
+
+.tooltipBody {
+  background: colors.$grey-80;
+  border-radius: functions.rem(8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: functions.rem(-4);
+}
+
+.tooltipText {
+  @extend %caption-1;
+  text-align: center;
+}
+
+.transferTooltip {
+  height: functions.rem(42);
+  width: functions.rem(117);
+}
+
+.expandWalletTooltip {
+  height: functions.rem(60);
+  margin-left: functions.rem(-85);
+  width: functions.rem(135);
+}
+
+.dotsMenu {
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: functions.rem(-83);
+  max-height: functions.rem(112);
+  padding: functions.rem(12) 0 functions.rem(12) 0;
+  width: functions.rem(164);
+}
+
+.dotsMenuElement {
+  @extend %body-2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 0 functions.rem(4) 0;
+  padding: 0 0 0 functions.rem(16);
+  text-align: start;
+  transition: background-color 0.3s;
+  user-select: none;
+  width: 100%;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    background-color: colors.$grey-75;
+  }
+}

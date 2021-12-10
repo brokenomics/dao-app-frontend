@@ -1,0 +1,9 @@
+@use 'styles/colors';
+@use 'styles/functions';
+
+.root {
+  background-color: colors.$grey-85;
+  border-radius: functions.rem(8);
+  padding: functions.rem(12) 0;
+  width: fit-content;
+}

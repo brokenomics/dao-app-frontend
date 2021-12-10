@@ -184,7 +184,7 @@ or 6341958000 * 10^-18
   }
 
   async getRewards(who: string) {
-    const rewards = await this.rpVaultInstance.methods.rewards(who).call();
+    const rewards = await this.rpVaultInstance.methods.earned(who).call();
 
     const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
 

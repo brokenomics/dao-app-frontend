@@ -152,7 +152,7 @@ export default class SLPVault {
   }
 
   async getRewards(who: string) {
-    const rewards = await this.slpVaultInstance.methods.rewards(who).call();
+    const rewards = await this.slpVaultInstance.methods.earned(who).call();
 
     const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
 

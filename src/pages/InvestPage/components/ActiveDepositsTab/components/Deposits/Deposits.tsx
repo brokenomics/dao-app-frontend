@@ -239,7 +239,7 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
         },
       },
       {
-        Header: 'Strategy APY',
+        Header: 'Strategy APR',
         cellClassName: s.narrowColumns,
         accessor: 'strategyAPY',
         Cell: ({ cell }: CellProps<{ value: number }>) => {

@@ -367,7 +367,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
             <div className={s.currency}>SUSHI LP - NEWO/USDC</div>
             <div className={s.strategy}>APR</div>
             <div className={s.percentValue}>
-              {slpVaultApy ? (
+              {slpVaultApy === 0 ? (
                 <span>NaN</span>
               ) : (
                 <>

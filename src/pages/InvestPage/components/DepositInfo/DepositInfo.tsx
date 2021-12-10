@@ -230,7 +230,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     getSlpVaultBalance();
     getSlpTokenBalance();
     // eslint-disable-next-line
-  }, [updateFlag]);
+  }, [updateFlag, address]);
 
   // async function onUnlock() {
   //   const tag = 'Unlock Vault';

@@ -52,7 +52,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => (
             </NavSection>
 
             <NavSection header="Marketplace">
-              <NavMenuItem iconName="members" to={ROUTES.INVEST} disabled>
+              <NavMenuItem iconName="members" to={ROUTES.INVEST}>
                 Vault
               </NavMenuItem>
             </NavSection>

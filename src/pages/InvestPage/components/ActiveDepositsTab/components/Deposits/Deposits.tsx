@@ -5,6 +5,7 @@ import { CellProps } from 'react-table';
 import { times } from 'lodash';
 import { SpinnerComponent } from 'react-element-spinner';
 
+import SLPVault from 'components/Vaults/SLPVault';
 import { Web3Context } from 'components/Web3Provider';
 import Vault from 'components/Vaults';
 import { showNotification } from 'components/UILib/notifications/notificationUtils';
@@ -22,6 +23,7 @@ import s from './Deposits.module.scss';
 
 const vaultClient = new Vault();
 // const vaultAddress = process.env.REACT_APP_BAL_ODEFI_RP0_Vault;
+const slpVaultClient = new SLPVault();
 
 interface ActiveDepositsProps {
   setSelectedDeposit: (id: string) => void;
@@ -40,6 +42,11 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
   const { address, updateTokenBalance } = React.useContext(Web3Context) || {};
   const [apy, setAPY] = React.useState(0);
 
+  // SLP
+  const [slpEntry, setSlpEntry] = React.useState(0);
+  const [slpBal, setSlpBal] = React.useState(0);
+  const [slpApy, setSlpApy] = React.useState(0);
+
   function getPositiveNegativeClassName(value: number) {
     const isRatePositive = value >= 0;
 
@@ -47,6 +54,25 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
       [s.positive]: isRatePositive,
       [s.negative]: !isRatePositive,
     });
+  }
+
+  async function getUserSlpBalance(who: string) {
+    const balance = await slpVaultClient.getUserVaultBalance(who);
+
+    if (balance === 0) {
+      setSlpEntry(0);
+    } else {
+      setSlpEntry(1);
+      setSlpBal(balance);
+    }
+
+    setLoading(false);
+  }
+
+  async function getSlpApy() {
+    const rate = await slpVaultClient.getStrategyAPY();
+
+    setSlpApy(rate);
   }
 
   async function getUserBalance(who: string) {
@@ -72,6 +98,8 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     if (address) {
       getUserBalance(address);
       getAPY();
+      getUserSlpBalance(address);
+      getSlpApy();
     }
   }, [address, updateFlag]);
 
@@ -81,6 +109,39 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     setPending(true);
 
     const tx = address && (await vaultClient.userWithDrawAll(address));
+
+    setPending(false);
+
+    if (tx) {
+      // hideModal();
+      if (updateTokenBalance) await updateTokenBalance();
+
+      showNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        description: 'Withdrawing assets successfully',
+        lifetime: 5000,
+        tag,
+      });
+
+      const flag = updateFlag + 1;
+
+      setUpdateFlag(flag);
+    } else {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Withdrawing assets failed, please try again later.',
+        lifetime: 5000,
+        tag,
+      });
+    }
+  }
+
+  async function handleSlpWithdraw() {
+    const tag = 'vault withdraw';
+
+    setPending(true);
+
+    const tx = address && (await slpVaultClient.userWithDrawAll(address));
 
     setPending(false);
 
@@ -162,17 +223,25 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
       },
       {
         Header: 'Actions',
+        accessor: 'strategyWithdraw',
         cellClassName: s.actionCell,
-        Cell: () => (
-          <Button
-            variant="monochrome"
-            disabled={!address}
-            onClick={handleWithdraw}
-            leftElement={<Icon name="withdraw" />}
-          >
-            Withdraw
-          </Button>
-        ),
+        Cell: ({ cell }: CellProps<{ value: string }>) => {
+          const { value } = cell;
+
+          const handleClick =
+            value === 'slp' ? handleSlpWithdraw : handleWithdraw;
+
+          return (
+            <Button
+              variant="monochrome"
+              disabled={!address}
+              onClick={handleClick}
+              leftElement={<Icon name="withdraw" />}
+            >
+              Withdraw
+            </Button>
+          );
+        },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,18 +249,27 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
   );
 
   const data = React.useMemo(
-    () =>
-      times(entry, (i) => ({
+    () => [
+      ...times(entry, (i) => ({
         id: i.toString(),
-        asset: 'NEWO',
+        asset: 'NEWO SINGLE-SIDE',
         balance: {
           balance: bal,
-          // rate: 1.2,
         },
         strategyAPY: apy,
-        // strategyName: 'Strategy name',
+        strategyWithdraw: 'newo',
       })),
-    [entry, bal, apy],
+      ...times(slpEntry, (i) => ({
+        id: i.toString(),
+        asset: 'SUSHI LP - NEWO/USDC',
+        balance: {
+          balance: slpBal,
+        },
+        strategyAPY: slpApy,
+        strategyWithdraw: 'slp',
+      })),
+    ],
+    [entry, bal, apy, slpEntry, slpBal, slpApy],
   );
 
   // function handleRowClick(row: Row) {

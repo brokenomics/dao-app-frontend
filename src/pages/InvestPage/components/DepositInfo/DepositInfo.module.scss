@@ -3,6 +3,9 @@
 @import 'styles/typography';
 
 .root {
+  align-items: center;
+  display: flex;
+  gap: functions.rem(20);
   width: functions.rem(288);
 }
 
@@ -23,9 +26,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding-left: functions.rem(32);
-  padding-right: functions.rem(32);
-  padding-top: functions.rem(32);
+
+  padding: functions.rem(32);
 
   &:last-of-type {
     background-color: colors.$grey-85;
@@ -73,13 +75,23 @@
   @extend %tagline-5;
 }
 
-.balance {
-  @extend %caption-1;
+.balances {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
 
-  align-self: baseline;
-  color: colors.$grey-65;
-  margin-bottom: functions.rem(24);
-  margin-top: functions.rem(4);
+  .balance {
+    @extend %caption-1;
+
+    align-self: baseline;
+    color: colors.$grey-65;
+    margin-top: functions.rem(4);
+
+    &:last-child {
+      margin-bottom: functions.rem(24);
+    }
+  }
 }
 
 .balanceValue {

@@ -17,7 +17,7 @@ import {
   HomePage,
   // UILibPage,
   VotingPage,
-  // InvestPage,
+  InvestPage,
   SingleVotePage,
   AirdropsPage,
 } from './pages';
@@ -78,10 +78,10 @@ const routes: RouteInfo[] = [
     path: ROUTES.SINGLE_VOTE,
     component: SingleVotePage,
   },
-  // {
-  //   path: ROUTES.INVEST,
-  //   component: InvestPage,
-  // },
+  {
+    path: ROUTES.INVEST,
+    component: InvestPage,
+  },
 ];
 
 export const App: React.FC = () => (

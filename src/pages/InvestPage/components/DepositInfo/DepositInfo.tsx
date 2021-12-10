@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import Vault from 'components/Vaults';
+import SLPVault from 'components/Vaults/SLPVault';
 import { Web3Context } from 'components/Web3Provider';
 import { showNotification } from 'components/UILib/notifications/notificationUtils';
 import LoadingOverlay from 'react-loading-overlay';
@@ -20,21 +21,122 @@ export interface DepositInfoProps {
 }
 const vaultClient = new Vault();
 const vaultAddress = process.env.REACT_APP_BAL_ODEFI_RP0_Vault;
+
+const slpVaultClient = new SLPVault();
+const slpVaultAddress = process.env.REACT_APP_SLP_VAULT;
+
 export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   const { className } = props;
 
   const [deposit, setDeposit] = React.useState('');
+  const [userVaultBalance, setUserVaultBalance] = React.useState(0);
   const [vaultBalance, setVaultBalance] = React.useState(0);
-  const [approvalPending, setApprovalPending] = React.useState(false);
-  const [depositPending, setDepositPending] = React.useState(false);
+  const [approvalPending, setApprovalPending] = React.useState('');
+  const [depositPending, setDepositPending] = React.useState('');
   const [apy, setAPY] = React.useState(0);
-  // const [transferPending, setTransferPending] = React.useState(false);
-  // const [unlockPending, setUnlockPending] = React.useState(false);
-  // const [isPaused, setIsPaused] = React.useState<boolean>();
-  // const [governanceAddr, setGovernanceAddr] = React.useState('');
   const [updateFlag, setUpdateFlag] = React.useState(0);
+
+  // SushiLP states
+  const [slpDeposit, setSlpDeposit] = React.useState('');
+  const [slpVaultApy, setSlpVaultApy] = React.useState(0);
+  const [userSlpVaultBalance, setUserSlpVaultBalance] = React.useState(0);
+  const [slpVaultBalance, setSlpVaultBalance] = React.useState(0);
+  const [slpTokenBalance, setSlpTokenBalance] = React.useState('');
+
   const { address, updateTokenBalance, tokenAmount } =
     React.useContext(Web3Context) || {};
+
+  async function getSlpTokenBalance() {
+    const balance = address && (await slpVaultClient.getTokenBalance(address));
+
+    if (!balance) return;
+
+    setSlpTokenBalance(balance.toFixed(2));
+  }
+
+  async function getSlpApy() {
+    const rate = await slpVaultClient.getStrategyAPY();
+
+    setSlpVaultApy(rate);
+  }
+
+  async function getUserSlpVaultBalance() {
+    const balance =
+      address && (await slpVaultClient.getUserVaultBalance(address));
+
+    if (!balance) return;
+
+    setUserSlpVaultBalance(balance);
+  }
+
+  async function getSlpVaultBalance() {
+    const bal = await slpVaultClient.getVaultBalance();
+
+    setSlpVaultBalance(bal);
+  }
+
+  async function onSlpDeposit() {
+    const tag = 'Vault Deposit';
+
+    const allowance =
+      address &&
+      slpVaultAddress &&
+      (await slpVaultClient.getAllowance(address, slpVaultAddress));
+
+    let tx;
+
+    if (parseFloat(allowance) <= 0) {
+      setApprovalPending('slpVault');
+
+      tx =
+        address &&
+        slpVaultAddress &&
+        (await slpVaultClient.getApproval(
+          slpVaultAddress,
+          MAX_INTEGER,
+          address,
+        ));
+
+      setApprovalPending('');
+
+      if (!tx) return;
+    }
+
+    setDepositPending('slpVault');
+    tx =
+      address && (await slpVaultClient.userDeposit(Number(deposit), address));
+    setDepositPending('');
+
+    if (tx) {
+      const flag = updateFlag + 1;
+
+      setUpdateFlag(flag);
+
+      if (updateTokenBalance) await updateTokenBalance();
+
+      showNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        description: 'Deposit successfully',
+        lifetime: 5000,
+        tag,
+      });
+    } else {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Deposit failed, please try again later.',
+        lifetime: 5000,
+        tag,
+      });
+    }
+  }
+
+  async function getUserVaultBalance() {
+    const balance = address && (await vaultClient.getUserVaultBalance(address));
+
+    if (!balance) return;
+
+    setUserVaultBalance(balance);
+  }
 
   async function getAPY() {
     const rate = await vaultClient.getStrategyAPY();
@@ -54,21 +156,21 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     let tx;
 
     if (parseFloat(allowance) <= 0) {
-      setApprovalPending(true);
+      setApprovalPending('vault');
 
       tx =
         address &&
         vaultAddress &&
         (await vaultClient.getApproval(vaultAddress, MAX_INTEGER, address));
 
-      setApprovalPending(false);
+      setApprovalPending('');
 
       if (!tx) return;
     }
 
-    setDepositPending(true);
+    setDepositPending('vault');
     tx = address && (await vaultClient.userDeposit(Number(deposit), address));
-    setDepositPending(false);
+    setDepositPending('');
     // setTransferPending(true);
     // tx = address && (await vaultClient.transferLP(address, Number(deposit)));
     // setTransferPending(false);
@@ -103,6 +205,14 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     if (tokenAmount) setDeposit(tokenAmount);
   }
 
+  function onSlpMax() {
+    if (slpTokenBalance) {
+      setSlpDeposit(slpTokenBalance.toString());
+    } else {
+      setSlpDeposit('0.00');
+    }
+  }
+
   async function getVaultBalance() {
     const bal = await vaultClient.getVaultBalance();
 
@@ -112,6 +222,12 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   useEffect(() => {
     getVaultBalance();
     getAPY();
+    getUserVaultBalance();
+    getSlpApy();
+    getUserSlpVaultBalance();
+    getSlpVaultBalance();
+    getSlpTokenBalance();
+    // eslint-disable-next-line
   }, [updateFlag]);
 
   // async function onUnlock() {
@@ -154,18 +270,18 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   return (
     <div className={cn(s.root, className)}>
       <LoadingOverlay
-        active={approvalPending || depositPending}
+        active={approvalPending === 'vault' || depositPending === 'vault'}
         spinner
         className={s.stakingContainer}
         text={
-          approvalPending
+          approvalPending === 'vault'
             ? 'Approval Pending ...'
             : 'Deposit Transaction Pending ...'
         }
       >
         <div className={s.tile}>
           <div className={s.tilePart}>
-            <div className={s.currency}>NEWO</div>
+            <div className={s.currency}>NEWO SINGLE-SIDE</div>
             <div className={s.strategy}>APY</div>
             <div className={s.percentValue}>
               <span>{apy}</span>
@@ -188,10 +304,18 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
                 </LabelButton>
               }
             />
-            <div className={s.balance}>
-              <span>Total Vault Balance:</span>
-              <span className={s.balanceValue}> {vaultBalance}</span>
+
+            <div className={s.balances}>
+              <div className={s.balance}>
+                <span>Total Vault Balance:</span>
+                <span className={s.balanceValue}> {vaultBalance}</span>
+              </div>
+              <div className={s.balance}>
+                <span>Your deposit:</span>
+                <span className={s.balanceValue}> {userVaultBalance}</span>
+              </div>
             </div>
+
             {address ? (
               <Button
                 className={s.depositButton}
@@ -215,6 +339,78 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
           </div>
         </div>
       </LoadingOverlay>
+
+      <LoadingOverlay
+        active={approvalPending === 'slpVault' || depositPending === 'slpVault'}
+        spinner
+        className={s.stakingContainer}
+        text={
+          approvalPending === 'slpVault'
+            ? 'Approval Pending ...'
+            : 'Deposit Transaction Pending ...'
+        }
+      >
+        <div className={s.tile}>
+          <div className={s.tilePart}>
+            <div className={s.currency}>SUSHI LP - NEWO/USDC</div>
+            <div className={s.strategy}>APY</div>
+            <div className={s.percentValue}>
+              <span>{slpVaultApy}</span>
+              <span className={s.percent}>%</span>
+            </div>
+          </div>
+          <div className={s.tilePart}>
+            <TextField
+              name="slpDeposit"
+              value={slpDeposit}
+              onChange={setSlpDeposit}
+              label="Deposit amount"
+              rightElement={
+                <LabelButton
+                  onClick={onSlpMax}
+                  disabled={!!address === false}
+                  className={s.maxButton}
+                >
+                  MAX
+                </LabelButton>
+              }
+            />
+
+            <div className={s.balances}>
+              <div className={s.balance}>
+                <span>Total Vault Balance:</span>
+                <span className={s.balanceValue}> {slpVaultBalance}</span>
+              </div>
+              <div className={s.balance}>
+                <span>Your deposit:</span>
+                <span className={s.balanceValue}> {userSlpVaultBalance}</span>
+              </div>
+            </div>
+
+            {address ? (
+              <Button
+                className={s.depositButton}
+                size="md"
+                onClick={onSlpDeposit}
+                disabled={!!address === false}
+              >
+                Deposit
+              </Button>
+            ) : (
+              <Button
+                className={s.depositButton}
+                size="md"
+                variant="outline"
+                onClick={onSlpDeposit}
+                disabled
+              >
+                Deposit
+              </Button>
+            )}
+          </div>
+        </div>
+      </LoadingOverlay>
+
       {/* {renderInfoLine('Protocols monitored', 9)}
       {renderInfoLine('Pools involved', 145)}
       {renderInfoLine('Strategies checked', '9,342')} */}

@@ -105,8 +105,11 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     }
 
     setDepositPending('slpVault');
+
     tx =
-      address && (await slpVaultClient.userDeposit(Number(deposit), address));
+      address &&
+      (await slpVaultClient.userDeposit(parseFloat(slpDeposit), address));
+
     setDepositPending('');
 
     if (tx) {
@@ -171,7 +174,8 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     }
 
     setDepositPending('vault');
-    tx = address && (await vaultClient.userDeposit(Number(deposit), address));
+    tx =
+      address && (await vaultClient.userDeposit(parseFloat(deposit), address));
     setDepositPending('');
     // setTransferPending(true);
     // tx = address && (await vaultClient.transferLP(address, Number(deposit)));

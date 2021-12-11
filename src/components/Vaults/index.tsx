@@ -112,7 +112,7 @@ export default class Vault {
         .estimateGas({ from: who });
 
       const tx = await this.rpVaultInstance.methods
-        .stake(bnValue)
+        .stake(tokens)
         .send(
           { from: who, gas: estimate + 10000 },
           (error, transactionHash) => {

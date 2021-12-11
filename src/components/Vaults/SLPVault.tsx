@@ -95,7 +95,7 @@ export default class SLPVault {
         .estimateGas({ from: who });
 
       const tx = await this.slpVaultInstance.methods
-        .stake(bnValue)
+        .stake(tokens)
         .send(
           { from: who, gas: estimate + 10000 },
           (error, transactionHash) => {

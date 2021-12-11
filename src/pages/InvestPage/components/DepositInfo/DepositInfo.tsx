@@ -233,9 +233,11 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     if (tokenAmount) setDeposit(tokenAmount);
   }
 
-  function onSlpMax() {
-    if (slpTokenBalance) {
-      setSlpDeposit(slpTokenBalance.toString());
+  async function onSlpMax() {
+    const balance = address && (await slpVaultClient.getTokenBalance(address));
+
+    if (balance) {
+      setSlpDeposit(balance.toString());
     } else {
       setSlpDeposit('0.00');
     }

@@ -171,7 +171,7 @@ const Web3Provider: React.FC<{ children: React.ReactNode }> = ({
 
     setState((prevState) => ({
       ...prevState,
-      tokenAmount: (balance / 1e18).toFixed(2),
+      tokenAmount: (balance / 1e18).toString(),
     }));
   };
 
@@ -192,7 +192,7 @@ const Web3Provider: React.FC<{ children: React.ReactNode }> = ({
       );
       const balance = await tokenInstance.methods.balanceOf(address).call();
 
-      return (balance / 1e18).toFixed(2);
+      return (balance / 1e18).toString();
     } catch (e) {
       return NOT_AVAILABLE;
     }

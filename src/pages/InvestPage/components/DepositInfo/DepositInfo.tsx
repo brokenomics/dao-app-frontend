@@ -344,7 +344,9 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
             <div className={s.balances}>
               <div className={s.balance}>
                 <span>Your balance: </span>
-                <span className={s.balanceValue}> {tokenAmount}</span>
+                <span className={s.balanceValue}>
+                  {Number(tokenAmount)?.toFixed(4)}
+                </span>
               </div>
               <div className={s.balance}>
                 <span>Your deposit:</span>

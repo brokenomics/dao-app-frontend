@@ -80,6 +80,17 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   async function onSlpDeposit() {
     const tag = 'Vault Deposit';
 
+    if (!slpDeposit || parseFloat(slpDeposit) <= 0) {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Deposit failed, cannot deposit 0',
+        lifetime: 5000,
+        tag,
+      });
+
+      return;
+    }
+
     const allowance =
       address &&
       slpVaultAddress &&
@@ -152,6 +163,17 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   async function onDeposit() {
     const tag = 'Vault Deposit';
+
+    if (!deposit || parseFloat(deposit) <= 0) {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Deposit failed, cannot deposit 0',
+        lifetime: 5000,
+        tag,
+      });
+
+      return;
+    }
 
     const allowance =
       address &&

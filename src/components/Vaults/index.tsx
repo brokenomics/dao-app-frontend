@@ -57,7 +57,7 @@ export default class Vault {
   async getVaultBalance() {
     const balance = await this.rpVaultInstance.methods.totalSupply().call();
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }
@@ -65,7 +65,7 @@ export default class Vault {
   async getUserVaultBalance(who: string) {
     const balance = await this.rpVaultInstance.methods.balanceOf(who).call();
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }
@@ -154,7 +154,7 @@ or 6341958000 * 10^-18
     const apy =
       100 * Number(this.yearInSeconds) * (Number(rewardRate) / totalSupply);
 
-    const formattedAPY = apy.toFixed(2);
+    const formattedAPY = apy.toFixed(4);
 
     if (Number.isNaN(parseInt(formattedAPY))) return 0;
 
@@ -186,7 +186,7 @@ or 6341958000 * 10^-18
   async getRewards(who: string) {
     const rewards = await this.rpVaultInstance.methods.earned(who).call();
 
-    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }

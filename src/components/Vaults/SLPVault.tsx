@@ -35,7 +35,7 @@ export default class SLPVault {
   async getTokenBalance(who: string) {
     const balance = await this.slpTokenInstance.methods.balanceOf(who).call();
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }
@@ -43,7 +43,7 @@ export default class SLPVault {
   async getVaultBalance() {
     const balance = await this.slpVaultInstance.methods.totalSupply().call();
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }
@@ -51,7 +51,7 @@ export default class SLPVault {
   async getUserVaultBalance(who: string) {
     const balance = await this.slpVaultInstance.methods.balanceOf(who).call();
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }
@@ -122,7 +122,7 @@ export default class SLPVault {
     const apy =
       100 * Number(this.yearInSeconds) * (Number(rewardRate) / totalSupply);
 
-    const formattedAPY = apy.toFixed(2);
+    const formattedAPY = apy.toFixed(4);
 
     if (Number.isNaN(parseInt(formattedAPY))) return 0;
 
@@ -154,7 +154,7 @@ export default class SLPVault {
   async getRewards(who: string) {
     const rewards = await this.slpVaultInstance.methods.earned(who).call();
 
-    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(2));
+    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(4));
 
     return formattedBal;
   }

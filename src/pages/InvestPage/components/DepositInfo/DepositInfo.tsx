@@ -50,7 +50,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     const balance = address && (await slpVaultClient.getTokenBalance(address));
 
     if (!balance) {
-      setSlpTokenBalance('0.00');
+      setSlpTokenBalance('0');
     } else {
       setSlpTokenBalance(balance.toFixed(2));
     }
@@ -230,14 +230,20 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   // TODO implement handling of max click
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   function onMax() {
-    if (tokenAmount) setDeposit(tokenAmount);
+    if (tokenAmount) {
+      const maxAmount = Math.floor(+tokenAmount * 10000) / 10000;
+
+      setDeposit(maxAmount.toString());
+    }
   }
 
   async function onSlpMax() {
     const balance = address && (await slpVaultClient.getTokenBalance(address));
 
     if (balance) {
-      setSlpDeposit(balance.toString());
+      const maxAmount = Math.floor(+balance * 1000000) / 1000000;
+
+      setSlpDeposit(maxAmount.toString());
     } else {
       setSlpDeposit('0.00');
     }
@@ -345,7 +351,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
               <div className={s.balance}>
                 <span>Your balance: </span>
                 <span className={s.balanceValue}>
-                  {Number(tokenAmount)?.toFixed(4)}
+                  {tokenAmount && Math.floor(+tokenAmount * 10000) / 10000}
                 </span>
               </div>
               <div className={s.balance}>

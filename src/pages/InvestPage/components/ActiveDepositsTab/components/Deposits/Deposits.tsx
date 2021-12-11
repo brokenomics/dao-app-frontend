@@ -323,7 +323,7 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
             <Skeleton count={2} height={50} />
           </p>
         </SkeletonTheme>
-      ) : entry !== 0 ? (
+      ) : entry !== 0 || slpEntry !== 0 ? (
         <>
           <Table
             columns={columns}

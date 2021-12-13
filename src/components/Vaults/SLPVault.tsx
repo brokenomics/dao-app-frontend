@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
 import { logger } from 'services';
 import { BNLike } from 'ethereumjs-util';
@@ -154,24 +155,38 @@ export default class SLPVault {
   }
 
   async getStrategyAPY() {
-    const totalNewo = await this.newoTokenInstance.methods
-      .balanceOf(SLP_TOKEN)
-      .call();
-    const formattedTotalNewo = totalNewo / 10 ** 18;
+    const totalNewo = new BigNumber(
+      await this.newoTokenInstance.methods.balanceOf(SLP_TOKEN).call(),
+    );
 
-    const totalUsdc = await this.usdcTokenInstance.methods
-      .balanceOf(SLP_TOKEN)
-      .call();
-    const formattedTotalUsdc = totalUsdc / 10 ** 6;
+    const totalUsdc = new BigNumber(
+      await this.usdcTokenInstance.methods.balanceOf(SLP_TOKEN).call(),
+    );
 
-    const rewardRate = await this.slpVaultInstance.methods.rewardRate().call();
-    const formattedRewardRate = rewardRate / 10 ** 18;
+    const rewardRate = new BigNumber(
+      await this.slpVaultInstance.methods.rewardRate().call(),
+    );
     const tokenPrice = await this.getLatestNewoTokenPrice();
 
-    const tvl = (formattedTotalUsdc + formattedTotalNewo) * tokenPrice;
+    const totalSlpToken = new BigNumber(
+      await this.slpTokenInstance.methods.totalSupply().call(),
+    );
+
+    const totalVaultBalance = new BigNumber(
+      await this.slpVaultInstance.methods.totalSupply().call(),
+    );
+
+    const tvl =
+      ((totalUsdc.shiftedBy(-6).toNumber() +
+        totalNewo.shiftedBy(-18).toNumber()) *
+        tokenPrice *
+        totalVaultBalance.shiftedBy(-18).toNumber()) /
+      totalSlpToken.shiftedBy(-18).toNumber();
 
     const apy =
-      ((formattedRewardRate * tokenPrice) / tvl) * this.yearInSeconds * 100;
+      ((rewardRate.shiftedBy(-18).toNumber() * tokenPrice) / tvl) *
+      this.yearInSeconds *
+      100;
 
     const formattedApy = Number(apy.toFixed(4));
 

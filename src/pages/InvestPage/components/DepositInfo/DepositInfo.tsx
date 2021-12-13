@@ -234,7 +234,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     if (tokenAmount) {
       const maxAmount = new BigNumber(tokenAmount);
 
-      setDeposit(maxAmount.shiftedBy(-18).toFixed(4, 1));
+      setDeposit(maxAmount.toFixed(4, 1));
     }
   }
 

@@ -35,10 +35,12 @@
   color: colors.$error-40;
 }
 
-.actionCell {
-  max-width: functions.rem(340) !important;
-}
-
 .noDepositImg {
   max-width: 20%;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: functions.rem(10);
 }

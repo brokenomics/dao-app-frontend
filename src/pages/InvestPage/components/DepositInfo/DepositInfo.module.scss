@@ -3,7 +3,7 @@
 @import 'styles/typography';
 
 .root {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   gap: functions.rem(20);
   width: functions.rem(288);
@@ -14,7 +14,7 @@
 
   display: flex;
   flex-direction: column;
-  height: functions.rem(366);
+  height: 100%;
   margin-bottom: functions.rem(12);
 }
 

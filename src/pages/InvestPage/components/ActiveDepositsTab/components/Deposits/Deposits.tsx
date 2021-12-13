@@ -129,8 +129,41 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     setPending(false);
 
     if (tx) {
-      // hideModal();
       if (updateTokenBalance) await updateTokenBalance();
+
+      showNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        description: 'Withdrawing assets successfully',
+        lifetime: 5000,
+        tag,
+      });
+
+      const flag = updateFlag + 1;
+
+      setUpdateFlag(flag);
+    } else {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Withdrawing assets failed, please try again later.',
+        lifetime: 5000,
+        tag,
+      });
+    }
+  }
+
+  async function handleNewoGetRewards() {
+    const tag = 'vault withdraw';
+
+    setPending(true);
+
+    const tx = address && (await vaultClient.withdrawRewards(address));
+
+    setPending(false);
+
+    if (tx) {
+      if (address) {
+        await getNewoRewards(address);
+      }
 
       showNotification({
         type: NOTIFICATION_TYPES.SUCCESS,
@@ -164,6 +197,40 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     if (tx) {
       // hideModal();
       if (updateTokenBalance) await updateTokenBalance();
+
+      showNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        description: 'Withdrawing assets successfully',
+        lifetime: 5000,
+        tag,
+      });
+
+      const flag = updateFlag + 1;
+
+      setUpdateFlag(flag);
+    } else {
+      showNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        description: 'Withdrawing assets failed, please try again later.',
+        lifetime: 5000,
+        tag,
+      });
+    }
+  }
+
+  async function handleSlpGetRewards() {
+    const tag = 'vault withdraw';
+
+    setPending(true);
+
+    const tx = address && (await slpVaultClient.withdrawRewards(address));
+
+    setPending(false);
+
+    if (tx) {
+      if (address) {
+        await getSlpRewards(address);
+      }
 
       showNotification({
         type: NOTIFICATION_TYPES.SUCCESS,
@@ -253,10 +320,6 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
         },
       },
       {
-        Header: ' ',
-        accessor: 'strategyName',
-      },
-      {
         Header: 'Actions',
         accessor: 'strategyWithdraw',
         cellClassName: s.actionCell,
@@ -266,15 +329,29 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
           const handleClick =
             value === 'slp' ? handleSlpWithdraw : handleWithdraw;
 
+          const handleGetRewardsClick =
+            value === 'slp' ? handleSlpGetRewards : handleNewoGetRewards;
+
           return (
-            <Button
-              variant="monochrome"
-              disabled={!address}
-              onClick={handleClick}
-              leftElement={<Icon name="withdraw" />}
-            >
-              Withdraw
-            </Button>
+            <div className={s.actions}>
+              <Button
+                variant="monochrome"
+                disabled={!address}
+                onClick={handleClick}
+                leftElement={<Icon name="withdraw" />}
+              >
+                Withdraw
+              </Button>
+
+              <Button
+                variant="monochrome"
+                disabled={!address}
+                onClick={handleGetRewardsClick}
+                leftElement={<Icon name="withdraw" />}
+              >
+                Get Rewards
+              </Button>
+            </div>
           );
         },
       },

@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import cn from 'classnames';
+import BigNumber from 'bignumber.js';
 
 import Vault from 'components/Vaults';
 import SLPVault from 'components/Vaults/SLPVault';
@@ -41,7 +42,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   const [slpVaultApy, setSlpVaultApy] = React.useState(0);
   const [userSlpVaultBalance, setUserSlpVaultBalance] = React.useState(0);
   const [slpVaultBalance, setSlpVaultBalance] = React.useState(0);
-  const [slpTokenBalance, setSlpTokenBalance] = React.useState('');
+  const [slpTokenBalance, setSlpTokenBalance] = React.useState(0);
 
   const { address, updateTokenBalance, tokenAmount } =
     React.useContext(Web3Context) || {};
@@ -50,9 +51,9 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     const balance = address && (await slpVaultClient.getTokenBalance(address));
 
     if (!balance) {
-      setSlpTokenBalance('0');
+      setSlpTokenBalance(0);
     } else {
-      setSlpTokenBalance(balance.toFixed(2));
+      setSlpTokenBalance(balance);
     }
   }
 
@@ -231,22 +232,14 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   function onMax() {
     if (tokenAmount) {
-      const maxAmount = Math.floor(+tokenAmount * 10000) / 10000;
+      const maxAmount = new BigNumber(tokenAmount);
 
-      setDeposit(maxAmount.toString());
+      setDeposit(maxAmount.shiftedBy(-18).toFixed(4, 1));
     }
   }
 
   async function onSlpMax() {
-    const balance = address && (await slpVaultClient.getTokenBalance(address));
-
-    if (balance) {
-      const maxAmount = Math.floor(+balance * 1000000) / 1000000;
-
-      setSlpDeposit(maxAmount.toString());
-    } else {
-      setSlpDeposit('0.00');
-    }
+    setSlpDeposit(slpTokenBalance.toString());
   }
 
   async function getVaultBalance() {
@@ -265,43 +258,6 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     getSlpTokenBalance();
     // eslint-disable-next-line
   }, [updateFlag, address]);
-
-  // async function onUnlock() {
-  //   const tag = 'Unlock Vault';
-
-  //   setUnlockPending(true);
-
-  //   const unlockTx = address && (await vaultClient.unPauseVault(address));
-
-  //   setUnlockPending(false);
-
-  //   if (unlockTx) {
-  //     // hideModal();
-  //     setIsPaused(true);
-
-  //     showNotification({
-  //       type: NOTIFICATION_TYPES.SUCCESS,
-  //       description: 'Unlocking Vault successfully',
-  //       lifetime: 5000,
-  //       tag,
-  //     });
-  //   } else {
-  //     showNotification({
-  //       type: NOTIFICATION_TYPES.ERROR,
-  //       description: 'Unlocking Vault failed, please try again later.',
-  //       lifetime: 5000,
-  //       tag,
-  //     });
-  //   }
-  // }
-  // function renderInfoLine(label: string, value: string | number) {
-  //   return (
-  //     <div className={s.infoLine}>
-  //       <div>{label}:</div>
-  //       <div className={s.value}>{value}</div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className={cn(s.root, className)}>
@@ -351,7 +307,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
               <div className={s.balance}>
                 <span>Your balance: </span>
                 <span className={s.balanceValue}>
-                  {tokenAmount && Math.floor(+tokenAmount * 10000) / 10000}
+                  {tokenAmount && new BigNumber(tokenAmount).toFixed(4, 1)}
                 </span>
               </div>
               <div className={s.balance}>

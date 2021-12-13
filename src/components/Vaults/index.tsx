@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
 import { BNLike } from 'ethereumjs-util';
 // import registryAbi from './abi/Registry.json';
@@ -55,19 +56,19 @@ export default class Vault {
   }
 
   async getVaultBalance() {
-    const balance = await this.rpVaultInstance.methods.totalSupply().call();
+    const balance = new BigNumber(
+      await this.rpVaultInstance.methods.totalSupply().call(),
+    );
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
-
-    return formattedBal;
+    return Number(balance.shiftedBy(-18).toFixed(4, 1));
   }
 
   async getUserVaultBalance(who: string) {
-    const balance = await this.rpVaultInstance.methods.balanceOf(who).call();
+    const balance = new BigNumber(
+      await this.rpVaultInstance.methods.balanceOf(who).call(),
+    );
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(4));
-
-    return formattedBal;
+    return Number(balance.shiftedBy(-18).toFixed(4, 1));
   }
 
   async getApproval(spender: string, amount: number | BNLike, sender: string) {
@@ -105,14 +106,14 @@ export default class Vault {
 
   async userDeposit(amount: number, who: string) {
     try {
-      const tokens = window.web3.utils.toWei(amount.toString(), 'ether');
-      const bnValue = window.web3.utils.toBN(tokens);
+      const depositAmount = new BigNumber(amount);
+
       const estimate = await this.rpVaultInstance.methods
-        .stake(bnValue)
+        .stake(depositAmount.shiftedBy(18))
         .estimateGas({ from: who });
 
       const tx = await this.rpVaultInstance.methods
-        .stake(tokens)
+        .stake(depositAmount.shiftedBy(18))
         .send(
           { from: who, gas: estimate + 10000 },
           (error, transactionHash) => {
@@ -148,11 +149,18 @@ or 6341958000 * 10^-18
   // GET APY FOR VAULT
   async getStrategyAPY() {
     // const balance = await this.rpVaultInstance.methods.balanceOf(who).call();
-    const rewardRate = await this.rpVaultInstance.methods.rewardRate().call();
-    const totalSupply = await this.rpVaultInstance.methods.totalSupply().call();
+    const rewardRate = new BigNumber(
+      await this.rpVaultInstance.methods.rewardRate().call(),
+    );
+    const totalSupply = new BigNumber(
+      await this.rpVaultInstance.methods.totalSupply().call(),
+    );
 
     const apy =
-      100 * Number(this.yearInSeconds) * (Number(rewardRate) / totalSupply);
+      100 *
+      Number(this.yearInSeconds) *
+      (rewardRate.shiftedBy(-18).toNumber() /
+        totalSupply.shiftedBy(-18).toNumber());
 
     const formattedAPY = apy.toFixed(4);
 
@@ -184,10 +192,32 @@ or 6341958000 * 10^-18
   }
 
   async getRewards(who: string) {
-    const rewards = await this.rpVaultInstance.methods.earned(who).call();
+    const rewards = new BigNumber(
+      await this.rpVaultInstance.methods.earned(who).call(),
+    );
 
-    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(4));
+    return Number(rewards.shiftedBy(-18).toFixed(4, 1));
+  }
 
-    return formattedBal;
+  async withdrawRewards(who: string) {
+    try {
+      const estimate = await this.rpVaultInstance.methods
+        .getReward()
+        .estimateGas({ from: who });
+
+      const tx = await this.rpVaultInstance.methods
+        .getReward()
+        .send({ from: who, gas: estimate }, (error, transactionHash) => {
+          if (error) {
+            return false;
+          }
+
+          return transactionHash.hash;
+        });
+
+      return tx;
+    } catch (error) {
+      return false;
+    }
   }
 }

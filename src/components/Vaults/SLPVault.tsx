@@ -74,27 +74,27 @@ export default class SLPVault {
   }
 
   async getTokenBalance(who: string) {
-    const balance = await this.slpTokenInstance.methods.balanceOf(who).call();
+    const balance = new BigNumber(
+      await this.slpTokenInstance.methods.balanceOf(who).call(),
+    );
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(6));
-
-    return formattedBal;
+    return Number(balance.shiftedBy(-18).toFixed(6, 1));
   }
 
   async getVaultBalance() {
-    const balance = await this.slpVaultInstance.methods.totalSupply().call();
+    const balance = new BigNumber(
+      await this.slpVaultInstance.methods.totalSupply().call(),
+    );
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(6));
-
-    return formattedBal;
+    return Number(balance.shiftedBy(-18).toFixed(6, 1));
   }
 
   async getUserVaultBalance(who: string) {
-    const balance = await this.slpVaultInstance.methods.balanceOf(who).call();
+    const balance = new BigNumber(
+      await this.slpVaultInstance.methods.balanceOf(who).call(),
+    );
 
-    const formattedBal = Number((Number(balance) / 10 ** 18).toFixed(6));
-
-    return formattedBal;
+    return Number(balance.shiftedBy(-18).toFixed(6, 1));
   }
 
   async getApproval(spender: string, amount: number | BNLike, sender: string) {
@@ -129,14 +129,13 @@ export default class SLPVault {
 
   async userDeposit(amount: number, who: string) {
     try {
-      const tokens = window.web3.utils.toWei(amount.toString(), 'ether');
-      const bnValue = window.web3.utils.toBN(tokens);
+      const depositAmount = new BigNumber(amount);
       const estimate = await this.slpVaultInstance.methods
-        .stake(bnValue)
+        .stake(depositAmount.shiftedBy(18))
         .estimateGas({ from: who });
 
       const tx = await this.slpVaultInstance.methods
-        .stake(tokens)
+        .stake(depositAmount.shiftedBy(18))
         .send(
           { from: who, gas: estimate + 10000 },
           (error, transactionHash) => {
@@ -216,10 +215,32 @@ export default class SLPVault {
   }
 
   async getRewards(who: string) {
-    const rewards = await this.slpVaultInstance.methods.earned(who).call();
+    const rewards = new BigNumber(
+      await this.slpVaultInstance.methods.earned(who).call(),
+    );
 
-    const formattedBal = Number((Number(rewards) / 10 ** 18).toFixed(6));
+    return Number(rewards.shiftedBy(-18).toFixed(6, 1));
+  }
 
-    return formattedBal;
+  async withdrawRewards(who: string) {
+    try {
+      const estimate = await this.slpVaultInstance.methods
+        .getReward()
+        .estimateGas({ from: who });
+
+      const tx = await this.slpVaultInstance.methods
+        .getReward()
+        .send({ from: who, gas: estimate }, (error, transactionHash) => {
+          if (error) {
+            return false;
+          }
+
+          return transactionHash.hash;
+        });
+
+      return tx;
+    } catch (error) {
+      return false;
+    }
   }
 }

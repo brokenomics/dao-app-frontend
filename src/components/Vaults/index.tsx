@@ -104,16 +104,24 @@ export default class Vault {
     }
   }
 
-  async userDeposit(amount: number, who: string) {
+  async userDeposit(amount: string, who: string, balance: string) {
     try {
-      const depositAmount = new BigNumber(amount);
+      const depositAmountEther = window.web3.utils.toWei(amount, 'ether');
+      let depositAmount = new BigNumber(depositAmountEther);
+
+      const tokenAmountEther = window.web3.utils.toWei(balance, 'ether');
+      const tokenAmount = new BigNumber(tokenAmountEther);
+
+      if (depositAmount > tokenAmount) {
+        depositAmount = tokenAmount;
+      }
 
       const estimate = await this.rpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
+        .stake(depositAmount)
         .estimateGas({ from: who });
 
       const tx = await this.rpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
+        .stake(depositAmount)
         .send(
           { from: who, gas: estimate + 10000 },
           (error, transactionHash) => {

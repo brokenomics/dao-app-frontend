@@ -120,7 +120,8 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
 
     tx =
       address &&
-      (await slpVaultClient.userDeposit(parseFloat(slpDeposit), address));
+      tokenAmount &&
+      (await slpVaultClient.userDeposit(slpDeposit, address, tokenAmount));
 
     setDepositPending('');
 
@@ -197,8 +198,12 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     }
 
     setDepositPending('vault');
+
     tx =
-      address && (await vaultClient.userDeposit(parseFloat(deposit), address));
+      address &&
+      tokenAmount &&
+      (await vaultClient.userDeposit(deposit, address, tokenAmount));
+
     setDepositPending('');
     // setTransferPending(true);
     // tx = address && (await vaultClient.transferLP(address, Number(deposit)));
@@ -234,7 +239,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     if (tokenAmount) {
       const maxAmount = new BigNumber(tokenAmount);
 
-      setDeposit(maxAmount.toFixed(4, 1));
+      setDeposit(maxAmount.toString());
     }
   }
 

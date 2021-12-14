@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import MetaMaskOnboarding from '@metamask/onboarding';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from 'web3-utils';
+import BigNumber from 'bignumber.js';
 import TestERC20 from './TestERC20.json';
 import { Web3Context, ContextStateType } from './Web3Context';
 import {
@@ -167,11 +168,13 @@ const Web3Provider: React.FC<{ children: React.ReactNode }> = ({
       tokenAddress,
     );
 
-    const balance = await tokenInstance.methods.balanceOf(address).call();
+    const balance = new BigNumber(
+      await tokenInstance.methods.balanceOf(address).call(),
+    );
 
     setState((prevState) => ({
       ...prevState,
-      tokenAmount: (balance / 1e18).toString(),
+      tokenAmount: balance.shiftedBy(-18).toString(),
     }));
   };
 
@@ -190,9 +193,11 @@ const Web3Provider: React.FC<{ children: React.ReactNode }> = ({
         TestERC20.abi as Array<AbiItem>,
         tokenAddress,
       );
-      const balance = await tokenInstance.methods.balanceOf(address).call();
+      const balance = new BigNumber(
+        await tokenInstance.methods.balanceOf(address).call(),
+      );
 
-      return (balance / 1e18).toString();
+      return balance.shiftedBy(-18).toString();
     } catch (e) {
       return NOT_AVAILABLE;
     }

@@ -58,6 +58,7 @@ public/sprite-icons.svg
 
 # misc
 .env.local
+.env.development
 
 # VSCode
 /.vscode

@@ -127,25 +127,26 @@ export default class SLPVault {
     }
   }
 
-  async userDeposit(amount: number, who: string) {
+  async userDeposit(amount: string, who: string) {
     try {
-      const depositAmount = new BigNumber(amount);
-      const estimate = await this.slpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
-        .estimateGas({ from: who });
+      const depositAmountEther = window.web3.utils.toWei(amount, 'ether');
+      const depositBn = window.web3.utils.toBN(depositAmountEther);
+
+      const estimate = new BigNumber(
+        await this.slpVaultInstance.methods
+          .stake(depositBn)
+          .estimateGas({ from: who }),
+      );
 
       const tx = await this.slpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
-        .send(
-          { from: who, gas: estimate + 10000 },
-          (error, transactionHash) => {
-            if (error) {
-              return false;
-            }
+        .stake(depositBn)
+        .send({ from: who, gas: estimate }, (error, transactionHash) => {
+          if (error) {
+            return false;
+          }
 
-            return transactionHash.hash;
-          },
-        );
+          return transactionHash.hash;
+        });
 
       return tx;
     } catch (error) {

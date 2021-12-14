@@ -5,6 +5,7 @@
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
 import { BNLike } from 'ethereumjs-util';
+import { logger } from 'services';
 // import registryAbi from './abi/Registry.json';
 // import riskManagerAbi from './abi/RiskManager.json';
 import vaultAbi from './abi/Vault.json';
@@ -104,29 +105,33 @@ export default class Vault {
     }
   }
 
-  async userDeposit(amount: number, who: string) {
+  async userDeposit(amount: string, who: string) {
     try {
-      const depositAmount = new BigNumber(amount);
+      const depositAmountEther = window.web3.utils.toWei(amount, 'ether');
+      const depositBn = window.web3.utils.toBN(depositAmountEther);
 
-      const estimate = await this.rpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
-        .estimateGas({ from: who });
+      const estimate = new BigNumber(
+        await this.rpVaultInstance.methods
+          .stake(depositBn)
+          .estimateGas({ from: who }),
+      );
+
+      logger.log(depositAmountEther, depositBn);
 
       const tx = await this.rpVaultInstance.methods
-        .stake(depositAmount.shiftedBy(18))
-        .send(
-          { from: who, gas: estimate + 10000 },
-          (error, transactionHash) => {
-            if (error) {
-              return false;
-            }
+        .stake(depositBn)
+        .send({ from: who, gas: estimate }, (error, transactionHash) => {
+          if (error) {
+            return false;
+          }
 
-            return transactionHash.hash;
-          },
-        );
+          return transactionHash.hash;
+        });
 
       return tx;
     } catch (error) {
+      logger.log(error);
+
       return false;
     }
   }

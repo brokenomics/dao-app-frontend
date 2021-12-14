@@ -165,6 +165,8 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     setPending(false);
 
     if (tx) {
+      if (updateTokenBalance) await updateTokenBalance();
+
       if (address) {
         await getNewoRewards(address);
       }
@@ -236,6 +238,8 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     setPending(false);
 
     if (tx) {
+      if (updateTokenBalance) await updateTokenBalance();
+
       if (address) {
         await getSlpRewards(address);
       }

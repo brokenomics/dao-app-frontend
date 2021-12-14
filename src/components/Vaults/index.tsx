@@ -116,22 +116,21 @@ export default class Vault {
         depositAmount = tokenAmount;
       }
 
-      const estimate = await this.rpVaultInstance.methods
-        .stake(depositAmount)
-        .estimateGas({ from: who });
+      const estimate = new BigNumber(
+        await this.rpVaultInstance.methods
+          .stake(depositAmount)
+          .estimateGas({ from: who }),
+      );
 
       const tx = await this.rpVaultInstance.methods
         .stake(depositAmount)
-        .send(
-          { from: who, gas: estimate + 10000 },
-          (error, transactionHash) => {
-            if (error) {
-              return false;
-            }
+        .send({ from: who, gas: estimate }, (error, transactionHash) => {
+          if (error) {
+            return false;
+          }
 
-            return transactionHash.hash;
-          },
-        );
+          return transactionHash.hash;
+        });
 
       return tx;
     } catch (error) {

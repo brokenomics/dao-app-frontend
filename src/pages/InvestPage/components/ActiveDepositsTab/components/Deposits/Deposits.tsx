@@ -131,6 +131,10 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     if (tx) {
       if (updateTokenBalance) await updateTokenBalance();
 
+      if (address) {
+        await getNewoRewards(address);
+      }
+
       showNotification({
         type: NOTIFICATION_TYPES.SUCCESS,
         description: 'Withdrawing assets successfully',
@@ -197,6 +201,10 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
     if (tx) {
       // hideModal();
       if (updateTokenBalance) await updateTokenBalance();
+
+      if (address) {
+        await getSlpRewards(address);
+      }
 
       showNotification({
         type: NOTIFICATION_TYPES.SUCCESS,
@@ -349,7 +357,7 @@ export const Deposits: React.FC<ActiveDepositsProps> = () => {
                 onClick={handleGetRewardsClick}
                 leftElement={<Icon name="withdraw" />}
               >
-                Get Rewards
+                Claim Rewards
               </Button>
             </div>
           );

@@ -57,6 +57,7 @@
   },
   "scripts": {
     "start": "yarn watch-icons & react-scripts start",
+    "start:dev": "env-cmd -f .env.development react-scripts start",
     "build": "yarn build-svg-sprite & react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -94,6 +95,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "css-module-types": "^0.2.2",
+    "env-cmd": "^10.1.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.2.0",
     "eslint-import-resolver-typescript": "^2.4.0",

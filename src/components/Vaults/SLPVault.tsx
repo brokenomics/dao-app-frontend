@@ -178,8 +178,7 @@ export default class SLPVault {
 
     const tvl =
       ((totalUsdc.shiftedBy(-6).toNumber() +
-        totalNewo.shiftedBy(-18).toNumber()) *
-        tokenPrice *
+        totalNewo.shiftedBy(-18).toNumber() * tokenPrice) *
         totalVaultBalance.shiftedBy(-18).toNumber()) /
       totalSlpToken.shiftedBy(-18).toNumber();
 

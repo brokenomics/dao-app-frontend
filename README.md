@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# New Order DAO App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend for the New Order DAO's Dapp that can found here: [https://dao.neworder.network/](https://dao.neworder.network/).
 
-## Available Scripts
+All documentation about the DAO can be found on our gitbook page here: [https://docs.neworder.network/new-order/](https://docs.neworder.network/new-order/)
 
-In the project directory, you can run:
+## Contributing to the Project
 
-### `yarn start`
+New Order welcomes contributors to our open source DAO app.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Join New Order DAO's discord server to get more help from other contributors on our `Engineering Workstream` channels. Join our discord server by clicking the invite link here: [https://discord.gg/3gduHhHs](https://discord.gg/3gduHhHs)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Issues
 
-### `yarn test`
+Feel free to submit issues and enhancement requests [here](https://github.com/new-order-network/dao-app-frontend/issues).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Contributing
 
-### `yarn build`
+Please refer to the project's style and contribution guidelines for submitting patches and additions. In general, we follow the "fork-and-pull" Git workflow.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For creating branches, we prefer to format it this way:
+`[ISSUE-TAG]/[ISSUE-NUMBER]-[A-MEANINGFUL-TITLE]`. So for example, we have an issue called "Update README" with a tag of "enhancement" and issue number of 1, the ideal branch name could be: `enhancement/1-update-readme`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Steps for Contributing with the "fork-and-pull" workflow:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.  **Fork** the repo on GitHub
+2.  **Clone** the project to your own machine
+3.  **Commit** changes to your own branch
+4.  **Push** your work back up to your fork
+5.  Submit a **Pull request** so that we can review your changes
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**NOTE:** Be sure to merge the latest from "upstream" before making a pull request!

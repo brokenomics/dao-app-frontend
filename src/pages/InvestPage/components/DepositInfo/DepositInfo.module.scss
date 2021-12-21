@@ -33,6 +33,10 @@
     background-color: colors.$grey-85;
     border-radius: 0 0 functions.rem(8) functions.rem(8);
   }
+
+  &.farms {
+    background-color: colors.$grey-95;
+  }
 }
 
 .lockMsg {
@@ -107,4 +111,25 @@
   font-size: functions.rem(14);
   position: absolute;
   right: functions.rem(5);
+}
+
+.depositContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: functions.rem(10);
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.farmText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: functions.rem(14);
+  text-align: center;
 }

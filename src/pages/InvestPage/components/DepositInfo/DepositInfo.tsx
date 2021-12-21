@@ -39,6 +39,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
 
   // SushiLP states
   const [slpDeposit, setSlpDeposit] = React.useState('');
+  const [slpVaultApy, setSlpVaultApy] = React.useState(0);
   const [userSlpVaultBalance, setUserSlpVaultBalance] = React.useState(0);
   const [slpVaultBalance, setSlpVaultBalance] = React.useState(0);
   const [slpTokenBalance, setSlpTokenBalance] = React.useState(0);
@@ -54,6 +55,12 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     } else {
       setSlpTokenBalance(balance);
     }
+  }
+
+  async function getSlpApy() {
+    const rate = await slpVaultClient.getStrategyAPY();
+
+    setSlpVaultApy(rate);
   }
 
   async function getUserSlpVaultBalance() {
@@ -250,6 +257,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
     getVaultBalance();
     getAPY();
     getUserVaultBalance();
+    getSlpApy();
     getUserSlpVaultBalance();
     getSlpVaultBalance();
     getSlpTokenBalance();
@@ -381,7 +389,14 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
             <div className={s.currency}>SUSHI LP - NEWO/USDC</div>
             <div className={s.strategy}>APY</div>
             <div className={s.percentValue}>
-              <span>NaN</span>
+              {slpVaultApy === 0 ? (
+                <span>NaN</span>
+              ) : (
+                <>
+                  <span>{slpVaultApy}</span>
+                  <span className={s.percent}>%</span>
+                </>
+              )}
             </div>
           </div>
           <div className={s.tilePart}>

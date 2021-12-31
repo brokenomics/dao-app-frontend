@@ -8,9 +8,9 @@ Why is this change required? What problem does it solve?
 
 Describe your changes in detail.
 
-### Related Issue
+### Related Issues
 
-Please paste associated Github issue link.
+Resolves [Add link to issue here]
 
 ### How Has This Been Tested?
 

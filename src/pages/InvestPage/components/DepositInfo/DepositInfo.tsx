@@ -349,31 +349,6 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
         </div>
       </LoadingOverlay>
 
-      <LoadingOverlay className={s.stakingContainer}>
-        <div className={s.tile}>
-          <div className={cn(s.tilePart, s.farms)}>
-            <div className={s.currency}>2X SUSHI REWARD FARMS</div>
-
-            <div className={s.farmText}>
-              <p>
-                You can find the NEWO farm by scrolling or by searching the
-                symbol on the search bar
-              </p>
-            </div>
-
-            <div className={s.depositContainer}>
-              <a
-                href="https://app.sushi.com/farm?filter=2x"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className={s.depositButton}>Go to Farm</Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </LoadingOverlay>
-
       <LoadingOverlay
         active={approvalPending === 'slpVault' || depositPending === 'slpVault'}
         spinner

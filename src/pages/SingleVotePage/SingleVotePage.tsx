@@ -328,7 +328,7 @@ export const SingleVotePage: React.FC = () => {
               {proposal?.snapshot}{' '}
               <a
                 rel="noreferrer"
-                href={`https://rinkeby.etherscan.io/block/${proposal?.snapshot}`}
+                href={`https://etherscan.io/block/${proposal?.snapshot}`}
                 target="_blank"
               >
                 <Icon name="more-vert" />

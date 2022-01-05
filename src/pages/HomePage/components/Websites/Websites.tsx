@@ -5,8 +5,8 @@ import {
   useDispatch,
   // useSelector
 } from 'react-redux';
-// import { logger } from 'services';
-// import mirrorApi from 'api/mirrorApi';
+import { logger } from 'services';
+import mirrorApi from 'api/mirrorApi';
 import dayjs from 'dayjs';
 import { arweave } from '../../../../helpers/arweave/arweave';
 import { arweaveClient } from '../../../../helpers/arweave/arweaveClient';
@@ -42,6 +42,7 @@ interface Article {
   dateTime: number;
   newsText: string;
   webLink: string;
+  digest: string;
 }
 
 const FILTERS_CONFIG: Section[] = [
@@ -73,7 +74,7 @@ const ARTICLES_QUERY = gql`
   query {
     transactions(
       sort: HEIGHT_DESC
-      first: 10
+      first: 100
       tags: [
         { name: "App-Name", values: "MirrorXYZ" }
         {
@@ -121,23 +122,24 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
 
           const mirrorPageUrl = `https://mirror.xyz/0x13c5432CfC12bA1f32B6090d1a09cf0Efe9C95Bd/${transactionDetail.originalDigest}`;
 
-          // console.log(transactionDetail);
+          let article;
 
-          // await mirrorApi
-          //   .get(`link-preview?url=${mirrorPageUrl}`)
-          //   .then((res) => console.log(res))
-          //   .catch((err) => console.log(err));
+          await mirrorApi
+            .get(transactionDetail.originalDigest)
+            .then((res) => {
+              article = res.data;
+            })
+            .catch((err) => logger.error(err));
 
           return {
             id: transaction.node.id,
-            // @TODO, make the image dynamic
-            mediaLink:
-              'https://images.mirror-media.xyz/nft/nhDERm-5kNIjoty8I7gth.png',
+            mediaLink: article?.image?.url,
             type: NEWS_TYPES.ARTICLE,
             refSource: 'Mirror',
             dateTime: transactionDetail.content.timestamp,
-            newsText: transactionDetail.content.body,
+            newsText: article?.description,
             webLink: mirrorPageUrl,
+            digest: transactionDetail.originalDigest,
           };
         } catch (err) {
           return false;
@@ -145,7 +147,13 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
       }),
     );
 
-    setTransactionList(transactions);
+    // Filter duplicated by checking the originalDigest
+    const filteredTransactions = transactions.filter(
+      (transaction, index) =>
+        !index || transaction.digest !== transactions[index - 1].digest,
+    );
+
+    setTransactionList(filteredTransactions);
   };
 
   React.useEffect(() => {

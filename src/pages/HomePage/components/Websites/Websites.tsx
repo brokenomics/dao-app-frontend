@@ -125,7 +125,7 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
           let article;
 
           await mirrorApi
-            .get(transactionDetail.originalDigest)
+            .get(`/${transactionDetail.originalDigest}`)
             .then((res) => {
               article = res.data;
             })

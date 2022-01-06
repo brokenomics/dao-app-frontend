@@ -145,8 +145,7 @@ const AirDropItem: React.FC<AirDropItemProps> = ({ className }) => {
           size="lg"
           variant="monochrome"
           tagElement="a"
-          // href={`https://www.confluxscan.io/block/${transactionAddr}`}
-          href={`https://rinkeby.etherscan.io/tx/${transactionAddr}`}
+          href={`https://etherscan.io/tx/${transactionAddr}`}
           target="_blank"
           rel="noreferrer"
         >

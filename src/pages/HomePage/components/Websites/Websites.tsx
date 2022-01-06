@@ -5,7 +5,7 @@ import { gql } from '@apollo/client';
 //   useDispatch,
 //   // useSelector
 // } from 'react-redux';
-
+import { logger } from 'services';
 import dayjs from 'dayjs';
 import { arweave } from '../../../../helpers/arweave/arweave';
 import { arweaveClient } from '../../../../helpers/arweave/arweaveClient';
@@ -138,6 +138,8 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
             digest: transactionDetail.originalDigest,
           };
         } catch (err) {
+          logger.error(err);
+
           return false;
         }
       }),

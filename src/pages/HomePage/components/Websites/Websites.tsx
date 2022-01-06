@@ -1,31 +1,31 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import { gql } from '@apollo/client';
-import {
-  useDispatch,
-  // useSelector
-} from 'react-redux';
+// import {
+//   useDispatch,
+//   // useSelector
+// } from 'react-redux';
 import { logger } from 'services';
 import mirrorApi from 'api/mirrorApi';
 import dayjs from 'dayjs';
 import { arweave } from '../../../../helpers/arweave/arweave';
 import { arweaveClient } from '../../../../helpers/arweave/arweaveClient';
-import { GOOGLE_API_KEY } from '../../../../constants/envVars';
+// import { GOOGLE_API_KEY } from '../../../../constants/envVars';
 
 import { NewsTileTitle } from '../NewsTileTitle';
 import { NewsCard } from '../../../../components/NewsCard';
 import { TagButton, TileContainer } from '../../../../components/UILib';
 
-import {
-  setVideos,
-  // selectVideos,
-  // selectArticles,
-} from '../../../../store/news';
+// import {
+//   setVideos,
+//   // selectVideos,
+//   // selectArticles,
+// } from '../../../../store/news';
 
 import { NEWS_TYPES } from '../../../../store/types';
-import { VideoResponse } from '../../../../store/news/types';
+// import { VideoResponse } from '../../../../store/news/types';
 
-import { request } from '../../../../utils/apiUtils';
+// import { request } from '../../../../utils/apiUtils';
 
 import s from './Websites.module.scss';
 
@@ -68,7 +68,7 @@ interface WebsitesProps {
   className?: string;
 }
 
-const YOUTUBE_API_URL = `https://www.googleapis.com/youtube/v3/search/?part=snippet&channelId=UCoNxg5l_2Gujke_Spm41F8Q&videoCaption=any&key=${GOOGLE_API_KEY}`;
+// const YOUTUBE_API_URL = `https://www.googleapis.com/youtube/v3/search/?part=snippet&channelId=UCoNxg5l_2Gujke_Spm41F8Q&videoCaption=any&key=${GOOGLE_API_KEY}`;
 
 const ARTICLES_QUERY = gql`
   query {
@@ -93,18 +93,18 @@ const ARTICLES_QUERY = gql`
 `;
 
 export const Websites: React.FC<WebsitesProps> = ({ className }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [section, setSection] = React.useState(FILTERS_CONFIG[0].type);
   const [transactionList, setTransactionList] = React.useState<Article[]>([]);
 
-  React.useEffect(() => {
-    request<VideoResponse>(YOUTUBE_API_URL).then((data) => {
-      if (data) {
-        dispatch(setVideos(data));
-      }
-    });
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   request<VideoResponse>(YOUTUBE_API_URL).then((data) => {
+  //     if (data) {
+  //       dispatch(setVideos(data));
+  //     }
+  //   });
+  // }, [dispatch]);
 
   const getArticles = async () => {
     // Fetch all the articles with the arweave graphql endpoint

@@ -132,21 +132,22 @@ export default class SLPVault {
       const depositAmountEther = window.web3.utils.toWei(amount, 'ether');
       const depositBn = window.web3.utils.toBN(depositAmountEther);
 
-      const estimate = new BigNumber(
-        await this.slpVaultInstance.methods
-          .stake(depositBn)
-          .estimateGas({ from: who }),
-      );
+      const estimate = await this.slpVaultInstance.methods
+        .stake(depositBn)
+        .estimateGas({ from: who });
 
       const tx = await this.slpVaultInstance.methods
         .stake(depositBn)
-        .send({ from: who, gas: estimate }, (error, transactionHash) => {
-          if (error) {
-            return false;
-          }
+        .send(
+          { from: who, gas: Math.round(estimate * 1.2) },
+          (error, transactionHash) => {
+            if (error) {
+              return false;
+            }
 
-          return transactionHash.hash;
-        });
+            return transactionHash.hash;
+          },
+        );
 
       return tx;
     } catch (error) {
@@ -200,13 +201,16 @@ export default class SLPVault {
 
       const tx = await this.slpVaultInstance.methods
         .exit()
-        .send({ from: who, gas: estimate }, (error, transactionHash) => {
-          if (error) {
-            return false;
-          }
+        .send(
+          { from: who, gas: Math.round(estimate * 1.2) },
+          (error, transactionHash) => {
+            if (error) {
+              return false;
+            }
 
-          return transactionHash.hash;
-        });
+            return transactionHash.hash;
+          },
+        );
 
       return tx;
     } catch (error) {
@@ -230,13 +234,16 @@ export default class SLPVault {
 
       const tx = await this.slpVaultInstance.methods
         .getReward()
-        .send({ from: who, gas: estimate }, (error, transactionHash) => {
-          if (error) {
-            return false;
-          }
+        .send(
+          { from: who, gas: Math.round(estimate * 1.2) },
+          (error, transactionHash) => {
+            if (error) {
+              return false;
+            }
 
-          return transactionHash.hash;
-        });
+            return transactionHash.hash;
+          },
+        );
 
       return tx;
     } catch (error) {

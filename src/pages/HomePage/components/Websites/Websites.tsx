@@ -127,8 +127,6 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
 
           const article = await req.json();
 
-          logger.log(req);
-
           return {
             id: transaction.node.id,
             mediaLink: article?.image?.url,

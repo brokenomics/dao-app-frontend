@@ -5,8 +5,7 @@ import { gql } from '@apollo/client';
 //   useDispatch,
 //   // useSelector
 // } from 'react-redux';
-import { logger } from 'services';
-import mirrorApi from 'api/mirrorApi';
+import axios from 'axios';
 import dayjs from 'dayjs';
 import { arweave } from '../../../../helpers/arweave/arweave';
 import { arweaveClient } from '../../../../helpers/arweave/arweaveClient';
@@ -122,14 +121,11 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
 
           const mirrorPageUrl = `https://mirror.xyz/0x13c5432CfC12bA1f32B6090d1a09cf0Efe9C95Bd/${transactionDetail.originalDigest}`;
 
-          let article;
+          const req = await axios.get(
+            `https://p9lzp1uqx9.execute-api.eu-central-1.amazonaws.com/content/${transactionDetail.originalDigest}`,
+          );
 
-          await mirrorApi
-            .get(`/${transactionDetail.originalDigest}`)
-            .then((res) => {
-              article = res.data;
-            })
-            .catch((err) => logger.error(err));
+          const article = req.data;
 
           return {
             id: transaction.node.id,

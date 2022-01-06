@@ -1,11 +1,15 @@
 import React from 'react';
 import { orderBy } from 'lodash';
-import { format } from 'date-fns';
+import { gql } from '@apollo/client';
 import {
   useDispatch,
   // useSelector
 } from 'react-redux';
-
+import { logger } from 'services';
+import mirrorApi from 'api/mirrorApi';
+import dayjs from 'dayjs';
+import { arweave } from '../../../../helpers/arweave/arweave';
+import { arweaveClient } from '../../../../helpers/arweave/arweaveClient';
 import { GOOGLE_API_KEY } from '../../../../constants/envVars';
 
 import { NewsTileTitle } from '../NewsTileTitle';
@@ -24,11 +28,21 @@ import { VideoResponse } from '../../../../store/news/types';
 import { request } from '../../../../utils/apiUtils';
 
 import s from './Websites.module.scss';
-import { newsFeed } from './Websites.data';
 
 interface Section {
   label: string;
   type: NEWS_TYPES | null;
+}
+
+interface Article {
+  id: string;
+  mediaLink: string;
+  type: NEWS_TYPES;
+  refSource: string;
+  dateTime: number;
+  newsText: string;
+  webLink: string;
+  digest: string;
 }
 
 const FILTERS_CONFIG: Section[] = [
@@ -56,13 +70,33 @@ interface WebsitesProps {
 
 const YOUTUBE_API_URL = `https://www.googleapis.com/youtube/v3/search/?part=snippet&channelId=UCoNxg5l_2Gujke_Spm41F8Q&videoCaption=any&key=${GOOGLE_API_KEY}`;
 
+const ARTICLES_QUERY = gql`
+  query {
+    transactions(
+      sort: HEIGHT_DESC
+      first: 100
+      tags: [
+        { name: "App-Name", values: "MirrorXYZ" }
+        {
+          name: "Contributor"
+          values: "0x13c5432CfC12bA1f32B6090d1a09cf0Efe9C95Bd"
+        }
+      ]
+    ) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const Websites: React.FC<WebsitesProps> = ({ className }) => {
   const dispatch = useDispatch();
 
-  // const videos = useSelector(selectVideos);
-  const articles = newsFeed;
-
   const [section, setSection] = React.useState(FILTERS_CONFIG[0].type);
+  const [transactionList, setTransactionList] = React.useState<Article[]>([]);
 
   React.useEffect(() => {
     request<VideoResponse>(YOUTUBE_API_URL).then((data) => {
@@ -71,6 +105,60 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
       }
     });
   }, [dispatch]);
+
+  const getArticles = async () => {
+    // Fetch all the articles with the arweave graphql endpoint
+    const { data } = await arweaveClient.query({
+      query: ARTICLES_QUERY,
+    });
+
+    // Use arweave package to fetch all the transactions from the articles data
+    const transactions: Article[] = await Promise.all(
+      data.transactions.edges.map(async (transaction) => {
+        try {
+          const transactionDetail = await arweave.transactions
+            .getData(transaction.node.id, { decode: true, string: true })
+            .then((res) => JSON.parse(res.toString()));
+
+          const mirrorPageUrl = `https://mirror.xyz/0x13c5432CfC12bA1f32B6090d1a09cf0Efe9C95Bd/${transactionDetail.originalDigest}`;
+
+          let article;
+
+          await mirrorApi
+            .get(transactionDetail.originalDigest)
+            .then((res) => {
+              article = res.data;
+            })
+            .catch((err) => logger.error(err));
+
+          return {
+            id: transaction.node.id,
+            mediaLink: article?.image?.url,
+            type: NEWS_TYPES.ARTICLE,
+            refSource: 'Mirror',
+            dateTime: transactionDetail.content.timestamp,
+            newsText: article?.description,
+            webLink: mirrorPageUrl,
+            digest: transactionDetail.originalDigest,
+          };
+        } catch (err) {
+          return false;
+        }
+      }),
+    );
+
+    // Filter duplicated by checking the originalDigest
+    const filteredTransactions = transactions.filter(
+      (transaction, index) =>
+        !index || transaction.digest !== transactions[index - 1].digest,
+    );
+
+    setTransactionList(filteredTransactions);
+  };
+
+  React.useEffect(() => {
+    getArticles();
+  }, []);
 
   function renderTags() {
     return FILTERS_CONFIG.map((item) => {
@@ -98,11 +186,13 @@ export const Websites: React.FC<WebsitesProps> = ({ className }) => {
   }
 
   function formatData(date: number | string) {
-    return format(new Date(date), 'dd.MM.yyyy HH:mm');
+    const convertedDate = dayjs.unix(Number(date));
+
+    return convertedDate.format('DD.MM.YYYY HH:mm');
   }
 
   function renderNews() {
-    const allNews = [...articles];
+    const allNews = [...transactionList];
     const sortedByDate = orderBy(allNews, 'dateTime', 'desc');
     const filteredNew = sortedByDate.filter((newsItem) => {
       if (section === null) {

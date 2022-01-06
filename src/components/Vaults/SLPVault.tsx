@@ -139,7 +139,7 @@ export default class SLPVault {
       const tx = await this.slpVaultInstance.methods
         .stake(depositBn)
         .send(
-          { from: who, gas: Math.round(estimate + estimate * 0.2) },
+          { from: who, gas: Math.round(estimate * 1.2) },
           (error, transactionHash) => {
             if (error) {
               return false;
@@ -202,7 +202,7 @@ export default class SLPVault {
       const tx = await this.slpVaultInstance.methods
         .exit()
         .send(
-          { from: who, gas: Math.round(estimate + estimate * 0.2) },
+          { from: who, gas: Math.round(estimate * 1.2) },
           (error, transactionHash) => {
             if (error) {
               return false;
@@ -235,7 +235,7 @@ export default class SLPVault {
       const tx = await this.slpVaultInstance.methods
         .getReward()
         .send(
-          { from: who, gas: Math.round(estimate + estimate * 0.2) },
+          { from: who, gas: Math.round(estimate * 1.2) },
           (error, transactionHash) => {
             if (error) {
               return false;

@@ -84,7 +84,7 @@ export default class Vault {
       const tx = await this.tokenInstance.methods
         .approve(spender, amount)
         .send(
-          { from: sender, gas: Math.round(estimate + estimate * 0.2) },
+          { from: sender, gas: Math.round(estimate * 1.2) },
           (error, transactionHash) => {
             if (error) {
               return false;
@@ -124,7 +124,7 @@ export default class Vault {
       const tx = await this.rpVaultInstance.methods
         .stake(depositBn)
         .send(
-          { from: who, gas: Math.round(estimate + estimate * 0.2) },
+          { from: who, gas: Math.round(estimate * 1.2) },
           (error, transactionHash) => {
             if (error) {
               return false;
@@ -188,13 +188,16 @@ or 6341958000 * 10^-18
 
       const tx = await this.rpVaultInstance.methods
         .exit()
-        .send({ from: who, gas: estimate }, (error, transactionHash) => {
-          if (error) {
-            return false;
-          }
+        .send(
+          { from: who, gas: Math.round(estimate * 1.2) },
+          (error, transactionHash) => {
+            if (error) {
+              return false;
+            }
 
-          return transactionHash.hash;
-        });
+            return transactionHash.hash;
+          },
+        );
 
       return tx;
     } catch (error) {
@@ -218,13 +221,16 @@ or 6341958000 * 10^-18
 
       const tx = await this.rpVaultInstance.methods
         .getReward()
-        .send({ from: who, gas: estimate }, (error, transactionHash) => {
-          if (error) {
-            return false;
-          }
+        .send(
+          { from: who, gas: Math.round(estimate * 1.2) },
+          (error, transactionHash) => {
+            if (error) {
+              return false;
+            }
 
-          return transactionHash.hash;
-        });
+            return transactionHash.hash;
+          },
+        );
 
       return tx;
     } catch (error) {

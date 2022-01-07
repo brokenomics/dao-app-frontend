@@ -279,7 +279,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
         <div className={s.tile}>
           <div className={s.tilePart}>
             <div className={s.currency}>NEWO SINGLE-SIDE</div>
-            <div className={s.strategy}>APY</div>
+            <div className={s.strategy}>APR</div>
             <div className={s.percentValue}>
               {apy === 0 ? (
                 <span>NaN</span>
@@ -362,7 +362,7 @@ export const DepositInfo: React.FC<DepositInfoProps> = (props) => {
         <div className={s.tile}>
           <div className={s.tilePart}>
             <div className={s.currency}>SUSHI LP - NEWO/USDC</div>
-            <div className={s.strategy}>APY</div>
+            <div className={s.strategy}>APR</div>
             <div className={s.percentValue}>
               {slpVaultApy === 0 ? (
                 <span>NaN</span>
